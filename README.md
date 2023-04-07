@@ -1,7 +1,7 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/YDg-_nm7)
 ## Authors
-* Name:  Email:
-* Name:  Email:
+* Name: Ariel Amon   Email: arielam@edu.hac.ac.il
+* Name: Noam Mirjani  Email: noammir@edu.hac.ac.il
 
 ## Explanations
 
