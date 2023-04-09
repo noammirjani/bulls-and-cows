@@ -5,6 +5,7 @@ function NumberSelector(){
     return (
         <Col>
         <label>
+
             <select className="form-select form-select-lg" aria-label="Guess">
                 <option disabled selected>Guess a number...</option>
                 <option value="0">0</option>
