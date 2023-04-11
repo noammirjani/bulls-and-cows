@@ -1,6 +1,6 @@
 import Game from "./Game";
 import CardImage from "./CardImage";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Win from "./Win";
 import {Container, Row} from "react-bootstrap";
 import MenuButtons from "./MenuButtons";
@@ -12,6 +12,14 @@ function Main() {
     const [inHighScore, setInHighScore] = useState(false);
 
     const [newGame, setNewGame] = useState(false);
+    const [score, setScore] = useState(0);
+
+    useEffect(() => {
+        if (newGame) {
+            setInGame(true);
+            setInWin(false);
+        }
+    }, [newGame]);
 
     return (
         <>
@@ -21,8 +29,20 @@ function Main() {
                     <Container>
                         <MenuButtons setNewGame={setNewGame}/>
                         {inGame &&
-                            <Game setWin={setInWin} setInGame={setInGame} newGame={newGame} setNewGame={setNewGame}/>}
-                        {inWin && <Win/>}
+                            <Game setWin={setInWin}
+                                  setInGame={setInGame}
+                                  newGame={newGame}
+                                  setNewGame={setNewGame}
+                                  setScore={setScore}
+                            />
+                        }
+                        {inWin &&
+                            <Win
+                                setScore={setScore}
+                                setInWin={setInWin}
+                                setInHighScore={setInHighScore}
+                            />
+                        }
                         {inHighScore && <Game/>}
                     </Container>
                 </div>

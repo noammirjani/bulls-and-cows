@@ -6,7 +6,7 @@ import UserMessages from "./UserMessages";
 import GuessingTable from "./GuessingTable";
 
 
-function Game({setWin, setInGame, newGame, setNewGame}) {
+function Game({setWin, setInGame, newGame, setNewGame, setScore}) {
 
     const initialGuess = ['guess...', 'guess...', 'guess...', 'guess...'];
     const initialMsg = "Your history of guesses will appear below:";
@@ -33,6 +33,8 @@ function Game({setWin, setInGame, newGame, setNewGame}) {
         setNewGame(false);
         setCowsAndBulls([]);
         setUserMessage(initialMsg);
+
+        console.log("in init")
     }
 
     // Hook for the newGame state
@@ -57,6 +59,7 @@ function Game({setWin, setInGame, newGame, setNewGame}) {
                                   setCowsAndBulls={setCowsAndBulls}
                                   setWin={setWin}
                                   setInGame={setInGame}
+                                  setScore={setScore}
                 />
             </Row>
             <Row className="d-flex justify-content-center text-center mb-5 mt-5">

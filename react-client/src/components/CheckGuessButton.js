@@ -1,6 +1,6 @@
 import {Col} from "react-bootstrap";
 
-function CheckGuessButton({actualNumbers, currGuesses, setMsg, setCowsAndBulls, setWin, setInGame}) {
+function CheckGuessButton({actualNumbers, currGuesses, setMsg, setCowsAndBulls, setWin, setInGame, setScore}) {
 
     const MAX_BULLS = 4;
     const MAX_COWS = 4;
@@ -31,14 +31,15 @@ function CheckGuessButton({actualNumbers, currGuesses, setMsg, setCowsAndBulls, 
         for (let i = 0; i < currGuesses.length; i++) {
             if (actualNumbers[i] === currGuesses[i]) bulls++;
         }
-        return {bulls, cows: cows.length}
+        return {bulls, cows: cows.length};
     }
 
 
     function checkWin(bulls, cows) {
         if (bulls === MAX_BULLS && cows === MAX_COWS) {
-            setWin(true)
-            setInGame(false)
+            setScore(currGuesses.length);
+            setWin(true);
+            setInGame(false);
         }
     }
 
