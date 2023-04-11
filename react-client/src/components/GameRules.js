@@ -1,5 +1,5 @@
 
-function GameRules({ onClose }) {
+function GameRules() {
     return (
         <div className="card mt-3">
             <div className="card-body bg-light">
@@ -11,7 +11,6 @@ function GameRules({ onClose }) {
                     Play by entering your guess in the 4 boxes on the right side and click "Check" to validate your entry.
                     You may also click "New" to start another game. 🐄 🐂
                 </p>
-                <button className="btn btn-outline-info fw-bolder fs-4" onClick={onClose}>Close</button>
             </div>
         </div>
     );

@@ -23,7 +23,7 @@ function Main() {
 
     return (
         <>
-            <div className="card mb-3 border-light" style={{backgroundColor: "#f1ce76"}}>
+            <div className="card mb-3 border-light" style={{backgroundColor: "#ffe4a9"}}>
                 <CardImage/>
                 <div className="card-body">
                     <Container>
