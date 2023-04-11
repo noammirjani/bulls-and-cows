@@ -3,8 +3,7 @@ import {useState} from "react";
 import GameRules from "./GameRules";
 
 
-function GameButtons({actualNumbers, currGuesses, setMsg, newGame}) {
-
+function GameButtons({actualNumbers, currGuesses, setMsg, newGame,setCowsAndBulls}) {
 
     const [rulesModal, setRulesModal] = useState(false);
 
@@ -39,6 +38,8 @@ function GameButtons({actualNumbers, currGuesses, setMsg, newGame}) {
             }
             console.log(actualNumbers,currGuesses,cows, bulls);
             setMsg(`Your Guess: ${bulls} bulls and ${cows.length} cows.`);
+            let currGuessData = {guess : currGuesses.join(" "), bulls : bulls, cows : cows.length};
+            setCowsAndBulls(current => [currGuessData,...current]);
         }
     }
 

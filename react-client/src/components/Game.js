@@ -1,16 +1,18 @@
-import {Col, Container, Row} from "react-bootstrap";
+import { Container, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import GameButtons from "./GameButtons";
 import NumberSelector from "./NumberSelector";
 import UserMessages from "./UserMessages";
+import GuessingTable from "./GuessingTable";
 
 
 function Game() {
-    const NUMBER_OF_DIGITS = 4;
+
     const [actualNumbers, setActualNumbers] = useState(() => generateRandom());
     const [guessNumbers, setGuessNumbers] = useState(['guess...', 'guess...', 'guess...', 'guess...']);
     const [userMessage, setUserMessage] = useState("Your history of guesses will appear below:");
     const [newGame, setNewGame] = useState(false);
+    const [cowsAndBulls, setCowsAndBulls] = useState([]);
 
 
     function generateRandom() {
@@ -27,6 +29,7 @@ function Game() {
         setActualNumbers(generateRandom());
         setGuessNumbers(['guess...', 'guess...', 'guess...', 'guess...']);
         setNewGame(false);
+        setCowsAndBulls([]);
     }
 
     // Hook for the newGame state
@@ -40,7 +43,12 @@ function Game() {
         <>
             <Container>
                 <Row className="d-flex justify-content-center text-center mb-3">
-                    <GameButtons  actualNumbers={actualNumbers} currGuesses={guessNumbers} setMsg={setUserMessage} newGame={setNewGame}/>
+                    <GameButtons  actualNumbers={actualNumbers}
+                                  currGuesses={guessNumbers}
+                                  setMsg={setUserMessage}
+                                  newGame={setNewGame}
+                                  setCowsAndBulls = {setCowsAndBulls}
+                    />
                 </Row>
                 <Row className="d-flex justify-content-center text-center mb-3">
                     <NumberSelector index={0} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
@@ -52,7 +60,7 @@ function Game() {
                     <UserMessages userMessage={userMessage}/>
                 </Row>
                 <Row className="d-flex justify-content-center text-center mb-3">
-                    <UserMessages userMessage={userMessage}/>
+                    <GuessingTable cowsAndBulls={cowsAndBulls} />
                 </Row>
             </Container>
         </>
