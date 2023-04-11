@@ -1,20 +1,30 @@
 import Game from "./Game";
+import CardImage from "./CardImage";
+import {useState} from "react";
+import Win from "./Win";
+import {Container, Row} from "react-bootstrap";
+import MenuButtons from "./MenuButtons";
 
-function Main(){
+function Main() {
+
+    const [inGame, setInGame] = useState(true);
+    const [inWin, setInWin] = useState(false);
+    const [inHighScore, setInHighScore] = useState(false);
+
+    const [newGame, setNewGame] = useState(false);
 
     return (
         <>
             <div className="card mb-3 border-light" style={{backgroundColor: "#f1ce76"}}>
-                <div className="position-relative d-inline-block">
-                    <img src="/assets/CowAndBull.jpg" className="card-img-top img-thumbnail" alt="cannot find bull and cow"/>
-                    <p className="position-absolute bottom-0 start-50 translate-middle-x text-uppercase bg-info bg-opacity-50
-                                  text-white display-1 d-inline px-3 py-2 rounded fw-bolder">
-                        cows&bulls
-                    </p>
-                </div>
-
+                <CardImage/>
                 <div className="card-body">
-                    <Game />
+                    <Container>
+                        <MenuButtons setNewGame={setNewGame}/>
+                        {inGame &&
+                            <Game setWin={setInWin} setInGame={setInGame} newGame={newGame} setNewGame={setNewGame}/>}
+                        {inWin && <Win/>}
+                        {inHighScore && <Game/>}
+                    </Container>
                 </div>
             </div>
         </>

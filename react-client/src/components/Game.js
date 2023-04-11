@@ -1,17 +1,19 @@
-import { Container, Row} from "react-bootstrap";
+import {Container, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import GameButtons from "./GameButtons";
+import CheckGuessButton from "./CheckGuessButton";
 import NumberSelector from "./NumberSelector";
 import UserMessages from "./UserMessages";
 import GuessingTable from "./GuessingTable";
 
 
-function Game() {
+function Game({setWin, setInGame, newGame, setNewGame}) {
+
+    const initialGuess = ['guess...', 'guess...', 'guess...', 'guess...'];
+    const initialMsg = "Your history of guesses will appear below:";
 
     const [actualNumbers, setActualNumbers] = useState(() => generateRandom());
-    const [guessNumbers, setGuessNumbers] = useState(['guess...', 'guess...', 'guess...', 'guess...']);
-    const [userMessage, setUserMessage] = useState("Your history of guesses will appear below:");
-    const [newGame, setNewGame] = useState(false);
+    const [guessNumbers, setGuessNumbers] = useState(initialGuess);
+    const [userMessage, setUserMessage] = useState(initialMsg);
     const [cowsAndBulls, setCowsAndBulls] = useState([]);
 
 
@@ -27,9 +29,10 @@ function Game() {
 
     function init() {
         setActualNumbers(generateRandom());
-        setGuessNumbers(['guess...', 'guess...', 'guess...', 'guess...']);
+        setGuessNumbers(initialGuess);
         setNewGame(false);
         setCowsAndBulls([]);
+        setUserMessage(initialMsg);
     }
 
     // Hook for the newGame state
@@ -41,28 +44,28 @@ function Game() {
 
     return (
         <>
-            <Container>
-                <Row className="d-flex justify-content-center text-center mb-3">
-                    <GameButtons  actualNumbers={actualNumbers}
+            <Row className="d-flex justify-content-center text-center mb-5 mt-5 ">
+                <NumberSelector index={0} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
+                <NumberSelector index={1} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
+                <NumberSelector index={2} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
+                <NumberSelector index={3} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
+            </Row>
+            <Row className="d-flex justify-content-center text-center mb-5 mt-5">
+                <CheckGuessButton actualNumbers={actualNumbers}
                                   currGuesses={guessNumbers}
                                   setMsg={setUserMessage}
-                                  newGame={setNewGame}
-                                  setCowsAndBulls = {setCowsAndBulls}
-                    />
-                </Row>
-                <Row className="d-flex justify-content-center text-center mb-3">
-                    <NumberSelector index={0} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
-                    <NumberSelector index={1} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
-                    <NumberSelector index={2} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
-                    <NumberSelector index={3} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
-                </Row>
-                <Row className="d-flex justify-content-center text-center mb-3">
-                    <UserMessages userMessage={userMessage}/>
-                </Row>
-                <Row className="d-flex justify-content-center text-center mb-3">
-                    <GuessingTable cowsAndBulls={cowsAndBulls} />
-                </Row>
-            </Container>
+                                  setCowsAndBulls={setCowsAndBulls}
+                                  setWin={setWin}
+                                  setInGame={setInGame}
+                />
+            </Row>
+            <Row className="d-flex justify-content-center text-center mb-5 mt-5">
+                <UserMessages userMessage={userMessage}/>
+            </Row>
+            <Row className="d-flex justify-content-center text-center mb-5 mt-5">
+                <GuessingTable cowsAndBulls={cowsAndBulls}/>
+            </Row>
+
         </>
     );
 }

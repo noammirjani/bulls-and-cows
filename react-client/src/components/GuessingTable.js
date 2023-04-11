@@ -1,12 +1,12 @@
 import {forEach} from "react-bootstrap/ElementChildren";
 import GuessingRow from "./GuessingRow";
 
-function GuessingTable({cowsAndBulls}){
+function GuessingTable({cowsAndBulls}) {
 
     const rows = [];
 
     cowsAndBulls.forEach((data, index) => {
-        rows.push(<GuessingRow guessData = {data} key={index}/>)
+        rows.push(<GuessingRow guessData={data} key={index}/>)
         console.log(data);
     })
 
