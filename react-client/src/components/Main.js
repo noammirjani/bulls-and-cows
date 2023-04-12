@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import Win from "./Win";
 import {Container, Row} from "react-bootstrap";
 import MenuButtons from "./MenuButtons";
+import HighScore from "./HighScore";
 
 function Main() {
 
@@ -38,12 +39,16 @@ function Main() {
                         }
                         {inWin &&
                             <Win
-                                setScore={setScore}
+                                score={score}
                                 setInWin={setInWin}
                                 setInHighScore={setInHighScore}
                             />
                         }
-                        {inHighScore && <Game/>}
+                        {inHighScore && <HighScore
+                            setInGame={setInGame}
+                            setInHighScore={setInHighScore}
+                            />
+                        }
                     </Container>
                 </div>
             </div>

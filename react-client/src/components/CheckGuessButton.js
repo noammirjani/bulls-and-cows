@@ -58,7 +58,7 @@ function CheckGuessButton({actualNumbers, currGuesses, setMsg, setCowsAndBulls, 
     return (
         <>
             <Col>
-                <button type="button" className="btn btn-lg btn-outline-light fw-bolder fs-4" onClick={checkGuess}>
+                <button type="button" className="btn btn-lg btn-outline-success fw-bolder fs-4" onClick={checkGuess}>
                     Check Your Guess
                 </button>
             </Col>
