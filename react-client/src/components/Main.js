@@ -15,31 +15,6 @@ function Main() {
     const [newGame, setNewGame] = useState(false);
     const [winnerSubmit, setWinnerSubmit] = useState(false);
     const [winnerData, setWinnerData] = useState({score : 0, userName:""});
-    //
-    // useEffect(() => {
-    //     if (newGame) {
-    //         setInGame(true);
-    //         setInWin(false);
-    //         setInHighScore(false);
-    //     }
-    // }, [newGame]);
-
-
-    // useEffect(() => {
-    //     if (winnerSubmit) {
-    //         submitWinnerData();
-    //     }
-    // }, [winnerSubmit]);
-    //
-    // useEffect(() => {
-    //     if (inHighScore) {
-    //         getHighscore();
-    //     }
-    // }, [inHighScore]);
-
-
-
-
 
     return (
         <>
