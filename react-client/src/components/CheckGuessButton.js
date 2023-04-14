@@ -1,9 +1,9 @@
 import {Col} from "react-bootstrap";
 
-function CheckGuessButton({actualNumbers, currGuesses, setMsg, setCowsAndBulls, setWin, setInGame}) {
+function CheckGuessButton({actualNumbers, currGuesses, setMsg, cowsAndBulls, setCowsAndBulls, setInWin, setInGame, setScore}) {
 
     const MAX_BULLS = 4;
-    const MAX_COWS = 4;
+    const MAX_COWS = 0;
 
     const validMsg = "Your history of guesses will appear below:"
     const notValidDigit = "Please select 4 digits";
@@ -26,19 +26,22 @@ function CheckGuessButton({actualNumbers, currGuesses, setMsg, setCowsAndBulls, 
     }
 
     function calculateGuess() {
-        let bulls = 0;
-        const cows = currGuesses.filter(number => actualNumbers.includes(number));
+        let bulls ,cows ;
+        bulls = cows = 0;
+        //const cows = currGuesses.filter(number => actualNumbers.includes(number));
         for (let i = 0; i < currGuesses.length; i++) {
             if (actualNumbers[i] === currGuesses[i]) bulls++;
+            else if (actualNumbers[i] !== currGuesses[i] && actualNumbers.includes(currGuesses[i])) cows++;
         }
-        return {bulls, cows: cows.length}
+        return {bulls, cows};
     }
 
 
     function checkWin(bulls, cows) {
         if (bulls === MAX_BULLS && cows === MAX_COWS) {
-            setWin(true)
-            setInGame(false)
+            setScore({score : cowsAndBulls.length+1, userName: ""});
+            setInWin(true);
+            setInGame(false);
         }
     }
 
@@ -57,7 +60,7 @@ function CheckGuessButton({actualNumbers, currGuesses, setMsg, setCowsAndBulls, 
     return (
         <>
             <Col>
-                <button type="button" className="btn btn-lg btn-outline-light fw-bolder fs-4" onClick={checkGuess}>
+                <button type="button" className="btn btn-lg btn-outline-success fw-bolder fs-4" onClick={checkGuess}>
                     Check Your Guess
                 </button>
             </Col>
