@@ -13,14 +13,33 @@ function Main() {
     const [inHighScore, setInHighScore] = useState(false);
 
     const [newGame, setNewGame] = useState(false);
-    const [score, setScore] = useState(0);
+    const [winnerSubmit, setWinnerSubmit] = useState(false);
+    const [winnerData, setWinnerData] = useState({score : 0, userName:""});
+    //
+    // useEffect(() => {
+    //     if (newGame) {
+    //         setInGame(true);
+    //         setInWin(false);
+    //         setInHighScore(false);
+    //     }
+    // }, [newGame]);
 
-    useEffect(() => {
-        if (newGame) {
-            setInGame(true);
-            setInWin(false);
-        }
-    }, [newGame]);
+
+    // useEffect(() => {
+    //     if (winnerSubmit) {
+    //         submitWinnerData();
+    //     }
+    // }, [winnerSubmit]);
+    //
+    // useEffect(() => {
+    //     if (inHighScore) {
+    //         getHighscore();
+    //     }
+    // }, [inHighScore]);
+
+
+
+
 
     return (
         <>
@@ -28,20 +47,27 @@ function Main() {
                 <CardImage/>
                 <div className="card-body">
                     <Container>
-                        <MenuButtons setNewGame={setNewGame}/>
+                        <MenuButtons
+                            setNewGame={setNewGame}
+                            setInGame={setInGame}
+                            setInWin={setInWin}
+                            setInHighScore={setInHighScore}
+                        />
                         {inGame &&
-                            <Game setWin={setInWin}
+                            <Game setInWin={setInWin}
                                   setInGame={setInGame}
                                   newGame={newGame}
                                   setNewGame={setNewGame}
-                                  setScore={setScore}
+                                  setScore={setWinnerData}
                             />
                         }
                         {inWin &&
                             <Win
-                                score={score}
+                                setWinnerData={setWinnerData}
+                                winnerData={winnerData}
                                 setInWin={setInWin}
                                 setInHighScore={setInHighScore}
+                                setWinnerSubmit={setWinnerSubmit}
                             />
                         }
                         {inHighScore && <HighScore

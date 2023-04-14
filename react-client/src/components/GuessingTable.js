@@ -7,7 +7,7 @@ function GuessingTable({cowsAndBulls}) {
 
     cowsAndBulls.forEach((data, index) => {
         rows.push(<GuessingRow guessData={data} key={index}/>)
-        console.log(data);
+
     })
 
     return (

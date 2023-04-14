@@ -6,7 +6,7 @@ import UserMessages from "./UserMessages";
 import GuessingTable from "./GuessingTable";
 
 
-function Game({setWin, setInGame, newGame, setNewGame, setScore}) {
+function Game({setInWin, setInGame, newGame, setNewGame, setScore}) {
 
     const initialGuess = ['guess...', 'guess...', 'guess...', 'guess...'];
     const initialMsg = "Your history of guesses will appear below:";
@@ -15,7 +15,6 @@ function Game({setWin, setInGame, newGame, setNewGame, setScore}) {
     const [guessNumbers, setGuessNumbers] = useState(initialGuess);
     const [userMessage, setUserMessage] = useState(initialMsg);
     const [cowsAndBulls, setCowsAndBulls] = useState([]);
-
 
     function generateRandom() {
         // Generate a random array of numbers
@@ -28,16 +27,16 @@ function Game({setWin, setInGame, newGame, setNewGame, setScore}) {
     }
 
     function init() {
-        setActualNumbers(generateRandom());
-        setGuessNumbers(initialGuess);
+
         setNewGame(false);
+        setGuessNumbers(initialGuess);
         setCowsAndBulls([]);
         setUserMessage(initialMsg);
-
+        setActualNumbers(generateRandom());
         console.log("in init")
     }
 
-    // Hook for the newGame state
+    //Hook for the newGame state
     useEffect(() => {
         if (newGame) {
             init();
@@ -56,14 +55,15 @@ function Game({setWin, setInGame, newGame, setNewGame, setScore}) {
                 <CheckGuessButton actualNumbers={actualNumbers}
                                   currGuesses={guessNumbers}
                                   setMsg={setUserMessage}
+                                  cowsAndBulls={cowsAndBulls}
                                   setCowsAndBulls={setCowsAndBulls}
-                                  setWin={setWin}
+                                  setInWin={setInWin}
                                   setInGame={setInGame}
                                   setScore={setScore}
                 />
             </Row>
             <Row className="d-flex justify-content-center text-center mb-5 mt-5">
-                <UserMessages userMessage={userMessage}/>
+                <UserMessages userMessage={userMessage} variant={"warning"}/>
             </Row>
             <Row className="d-flex justify-content-center text-center mb-5 mt-5">
                 <GuessingTable cowsAndBulls={cowsAndBulls}/>
