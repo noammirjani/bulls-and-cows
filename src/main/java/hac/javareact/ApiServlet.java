@@ -79,18 +79,18 @@ public class ApiServlet extends HttpServlet {
         try (FileOutputStream fileOutputStream = new FileOutputStream(SCORES, true);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
-            String username = request.getParameter("name");
+            String username = request.getParameter("username");
             int score = Integer.parseInt(request.getParameter("score"));
 
             User newUser = new User();
-            newUser.validateUser(username, score);
+           // newUser.validateUser(username, score);
             newUser.setName(username);
             newUser.setScore(score);
 
             // write the object to the output stream
             objectOutputStream.writeObject(newUser);
             objectOutputStream.flush();
-            //objectOutputStream.close();
+            objectOutputStream.close();
 
             response.setStatus(HttpServletResponse.SC_OK);
             Gson gson = new Gson();
@@ -114,22 +114,22 @@ public class ApiServlet extends HttpServlet {
 
         this.realPath = getServletContext().getRealPath(".");
 
-        try (FileOutputStream fileOutputStream = new FileOutputStream(SCORES);
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-
-            for (int i =0 ; i < 4 ; i++ ){
-                User newUser = new User();
-                //newUser.validateUser(username, score);
-                newUser.setName("aaa");
-                newUser.setScore(i);
-                objectOutputStream.writeObject(newUser);
-
-            }
-            objectOutputStream.flush();
-        }
-        catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+//        try (FileOutputStream fileOutputStream = new FileOutputStream(SCORES);
+//             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+//
+//            for (int i =0 ; i < 4 ; i++ ){
+//                User newUser = new User();
+//                //newUser.validateUser(username, score);
+//                newUser.setName("aaa");
+//                newUser.setScore(i);
+//                objectOutputStream.writeObject(newUser);
+//
+//            }
+//            objectOutputStream.flush();
+//        }
+//        catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 
     @Override

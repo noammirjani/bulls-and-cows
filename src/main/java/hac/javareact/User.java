@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String name;
+    private String username;
     private int score;
 
 
@@ -23,7 +23,7 @@ public class User implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
     public void setScore(int score) {
         this.score = score;

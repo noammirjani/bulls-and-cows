@@ -2,25 +2,21 @@ import {Row} from "react-bootstrap";
 import UserMessages from "./UserMessages";
 
 
-function Win({setWinnerData, winnerData, setInWin, setInHighScore, setWinnerSubmit}) {
+function Win({userScore, setInWin, handlePostWinner}) {
 
     const variant = "success large-alert text-uppercase";
 
     function handleSubmit(event){
-        //check that name is valid
-        //enter winner to list of winners and it score -> if needed update the score of existed name
         event.preventDefault();
-        setWinnerData({score: winnerData.score, userName: event.target.userName.value})
         console.log(event.target.userName.value)
         setInWin(false);
-        setInHighScore(true);
-        setWinnerSubmit(true);
+        handlePostWinner(event.target.userName.value);
     }
 
     return (
         <>
             <Row className=" d-flex justify-content-center" >
-                <UserMessages userMessage={`you win! your score is ${winnerData.score}!`} variant={variant} className="text-uppercase" />
+                <UserMessages userMessage={`you win! your score is ${userScore}!`} variant={variant} className="text-uppercase" />
             </Row>
 
             <Row className="d-flex justify-content-center text-center">
