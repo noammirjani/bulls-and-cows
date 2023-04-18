@@ -50,7 +50,6 @@ function Main() {
                 <div className="card-body">
                     <Container>
                         <MenuButtons
-
                             setInGame={setInGame}
                             setInWin={setInWin}
                             setInHighScore={setInHighScore}

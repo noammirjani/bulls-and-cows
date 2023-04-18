@@ -1,38 +1,36 @@
-import {Container, Row} from "react-bootstrap";
-import {useEffect, useState} from "react";
+import {Row} from "react-bootstrap";
 import CheckGuessButton from "./CheckGuessButton";
 import NumberSelector from "./NumberSelector";
 import UserMessages from "./UserMessages";
 import GuessingTable from "./GuessingTable";
 
 
-function Game({setInWin, setInGame, setScore, actualNumbers, guessNumbers, userMessage, cowsAndBulls,setGuessNumbers,
-                  setUserMessage, setCowsAndBulls}) {
+function Game(props) {
 
     return (
         <>
             <Row className="d-flex justify-content-center text-center mb-5 mt-5 ">
-                <NumberSelector index={0} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
-                <NumberSelector index={1} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
-                <NumberSelector index={2} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
-                <NumberSelector index={3} currGuesses={guessNumbers} setGuess={setGuessNumbers}/>
+                <NumberSelector index={0} currGuesses={props.guessNumbers} setGuess={props.setGuessNumbers}/>
+                <NumberSelector index={1} currGuesses={props.guessNumbers} setGuess={props.setGuessNumbers}/>
+                <NumberSelector index={2} currGuesses={props.guessNumbers} setGuess={props.setGuessNumbers}/>
+                <NumberSelector index={3} currGuesses={props.guessNumbers} setGuess={props.setGuessNumbers}/>
             </Row>
             <Row className="d-flex justify-content-center text-center mb-5 mt-5">
-                <CheckGuessButton actualNumbers={actualNumbers}
-                                  currGuesses={guessNumbers}
-                                  setMsg={setUserMessage}
-                                  cowsAndBulls={cowsAndBulls}
-                                  setCowsAndBulls={setCowsAndBulls}
-                                  setInWin={setInWin}
-                                  setInGame={setInGame}
-                                  setScore={setScore}
+                <CheckGuessButton actualNumbers={props.actualNumbers}
+                                  currGuesses={props.guessNumbers}
+                                  setMsg={props.setUserMessage}
+                                  cowsAndBulls={props.cowsAndBulls}
+                                  setCowsAndBulls={props.setCowsAndBulls}
+                                  setInWin={props.setInWin}
+                                  setInGame={props.setInGame}
+                                  setScore={props.setScore}
                 />
             </Row>
             <Row className="d-flex justify-content-center text-center mb-5 mt-5">
-                <UserMessages userMessage={userMessage} variant={"warning"}/>
+                <UserMessages userMessage={props.userMessage} variant={"warning"}/>
             </Row>
             <Row className="d-flex justify-content-center text-center mb-5 mt-5">
-                <GuessingTable cowsAndBulls={cowsAndBulls}/>
+                <GuessingTable cowsAndBulls={props.cowsAndBulls}/>
             </Row>
 
         </>
