@@ -6,42 +6,8 @@ import UserMessages from "./UserMessages";
 import GuessingTable from "./GuessingTable";
 
 
-function Game({setInWin, setInGame, newGame, setNewGame, setScore}) {
-
-    const initialGuess = ['guess...', 'guess...', 'guess...', 'guess...'];
-    const initialMsg = "Your history of guesses will appear below:";
-
-    const [actualNumbers, setActualNumbers] = useState(() => generateRandom());
-    const [guessNumbers, setGuessNumbers] = useState(initialGuess);
-    const [userMessage, setUserMessage] = useState(initialMsg);
-    const [cowsAndBulls, setCowsAndBulls] = useState([]);
-
-    function generateRandom() {
-        // Generate a random array of numbers
-        const digits = new Set();
-        while (digits.size < 4) {
-            digits.add(Math.floor(Math.random() * 10).toString());
-        }
-        console.log(digits);
-        return [...digits];
-    }
-
-    function init() {
-
-        setNewGame(false);
-        setGuessNumbers(initialGuess);
-        setCowsAndBulls([]);
-        setUserMessage(initialMsg);
-        setActualNumbers(generateRandom());
-        console.log("in init")
-    }
-
-    //Hook for the newGame state
-    useEffect(() => {
-        if (newGame) {
-            init();
-        }
-    }, [newGame]);
+function Game({setInWin, setInGame, setScore, actualNumbers, guessNumbers, userMessage, cowsAndBulls,setGuessNumbers,
+                  setUserMessage, setCowsAndBulls}) {
 
     return (
         <>
