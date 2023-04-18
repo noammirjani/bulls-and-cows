@@ -2,15 +2,15 @@ import {Col, Row} from "react-bootstrap";
 import {useState} from "react";
 import GameRules from "./GameRules";
 
-function MenuButtons({setNewGame, setInGame, setInWin, setInHighScore}) {
+function MenuButtons({setInGame, setInWin, setInHighScore, initFunc}) {
 
     const [rulesModal, setRulesModal] = useState(false);
 
     function startNewGame(){
-        setNewGame(true);
         setInGame(true);
         setInWin(false);
         setInHighScore(false);
+        initFunc();
     }
 
     return (
