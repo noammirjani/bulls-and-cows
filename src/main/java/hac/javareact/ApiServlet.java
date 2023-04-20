@@ -13,6 +13,7 @@ public class ApiServlet extends HttpServlet {
 
     private String realPath;
     private static final String SCORES  = "scores.dat";
+    private static final Object writeLock = new Object();
 
     public static List<User> readUsersFromFile() throws IOException, ClassNotFoundException {
         try (ObjectInputStream objIn = new ObjectInputStream(new FileInputStream(SCORES))) {
@@ -20,72 +21,84 @@ public class ApiServlet extends HttpServlet {
         }
     }
 
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setContentType("application/json");
+
         try {
             List<User> users = readUsersFromFile();
             users.sort((u1, u2) -> Integer.compare(u1.getScore(), u2.getScore())); // sort by score descending
             List<User> topFive = users.subList(0, Math.min(users.size(), 5)); // get top five users
-            response.setStatus(HttpServletResponse.SC_OK);
-            Gson gson = new Gson();
-            String json = gson.toJson(topFive);
-            response.getWriter().write(json);
+            response(response, HttpServletResponse.SC_OK, topFive);
+
         } catch (IOException | ClassNotFoundException e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            Gson gson = new Gson();
-            String json = gson.toJson(e.getMessage());
-            response.getWriter().write(json);
+            response(response, HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        response.setContentType("application/json");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        try {
+            User newUser = getNewUser(request);
 
-        String username = request.getParameter("username");
-        int score = Integer.parseInt(request.getParameter("score"));
+            List<User> users;
+            try {
+                users = readUsersFromFile();
+            } catch (IOException | ClassNotFoundException e) {
+                users = new ArrayList<>();
+            }
+
+            updateUsersData(newUser, users);
+
+            try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(SCORES))) {
+                objOut.writeObject(users);
+            }
+
+            response(response, HttpServletResponse.SC_OK, "user added!");
+        }
+        catch(Exception e){
+            response(response, HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    private void updateUsersData(User newUser, List<User> users) {
         boolean found = false;
 
-        User newUser = new User();
-        newUser.setName(username);
-        newUser.setScore(score);
-
-        List<User> users;
-        try {
-            users = readUsersFromFile();
-        } catch (IOException | ClassNotFoundException e) {
-            users = new ArrayList<>();
-        }
-
         for (User user : users) {
-            if (user.getName().equals(username)) {
-                if(user.getScore() > score) user.setScore(score);
+            if (user.getName().equals(newUser.getName())) {
+                if(user.getScore() > newUser.getScore()) user.setScore(newUser.getScore());
                 found = true;
                 break;
             }
         }
+
         if (!found) {
             users.add(newUser);
         }
+    }
 
-        //users.add(newUser);
-        try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(SCORES))) {
-            objOut.writeObject(users);
-        } catch (IOException e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            Gson gson = new Gson();
-            String json = gson.toJson(e.getMessage());
-            response.getWriter().write(json);
-            return;
-        }
-        response.setStatus(HttpServletResponse.SC_OK);
+    private User getNewUser(HttpServletRequest request) {
+
+        //get the data from body of the request
+        String username = request.getParameter("username");
+        int score = Integer.parseInt(request.getParameter("score"));
+
+        //validation in setting
+        User newUser = new User();
+        newUser.setName(username);
+        newUser.setScore(score);
+
+        return newUser;
+    }
+
+    public void response(HttpServletResponse res, int code, Object data)  throws IOException{
+        res.setContentType("application/json");
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setStatus(code);
         Gson gson = new Gson();
-        String json = gson.toJson("added player !");
-        response.getWriter().write(json);
+        String json = gson.toJson(data);
+        res.getWriter().write(json);
     }
 
     @Override
