@@ -5,6 +5,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 
 /* You can delete this comment before submission - it's only here to help you get started.
 Your servlet should be available at "/java_react_war/api/highscores"
@@ -20,20 +22,9 @@ public class ApiServlet extends HttpServlet {
     private String realPath;
     private static final String SCORES  = "scores.dat";
 
-    /**
-     *
-     * @param request
-     * @param response
-     * @throws IOException
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+    private ArrayList<User>read(){
         ArrayList<User> userList = new ArrayList<>();
-
-        // prepare the response
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setContentType("application/json");
 
         try (FileInputStream fileIn = new FileInputStream(SCORES);
              ObjectInputStream objIn = new ObjectInputStream(fileIn)) {
@@ -47,13 +38,38 @@ public class ApiServlet extends HttpServlet {
                     break;
                 }
             }
+        }
+        catch(Exception  e){
+            System.out.println("read failed");
+        }
+
+        return userList;
+    }
+
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // prepare the response
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setContentType("application/json");
+
+       try{
+            ArrayList<User> userList = read();
+            userList.sort(Comparator.comparingInt(User::getScore));
 
             response.setStatus(HttpServletResponse.SC_OK);
             Gson gson = new Gson();
-            String json = gson.toJson(userList);
+           ArrayList<User> retArr = userList.size() < 5 ? userList : (ArrayList<User>) userList.subList(0,5);
+            String json = gson.toJson(retArr);
             response.getWriter().write(json);
 
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
 
             System.out.println(e.getMessage());
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -75,8 +91,10 @@ public class ApiServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
+        ArrayList<User> userList = read();
+
         // Writing to scores.dat file
-        try (FileOutputStream fileOutputStream = new FileOutputStream(SCORES, true);
+        try (FileOutputStream fileOutputStream = new FileOutputStream(SCORES);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
             String username = request.getParameter("username");
@@ -86,18 +104,17 @@ public class ApiServlet extends HttpServlet {
            // newUser.validateUser(username, score);
             newUser.setName(username);
             newUser.setScore(score);
+            userList.add(newUser);
 
             // write the object to the output stream
-            objectOutputStream.writeObject(newUser);
+            objectOutputStream.writeObject(userList);
             objectOutputStream.flush();
             objectOutputStream.close();
 
             response.setStatus(HttpServletResponse.SC_OK);
             Gson gson = new Gson();
-            String json = gson.toJson("added player ! ");
+            String json = gson.toJson("added player, update db! ");
             response.getWriter().write(json);
-
-
         }
         catch (IOException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
