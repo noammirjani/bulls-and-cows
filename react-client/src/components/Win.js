@@ -28,6 +28,7 @@ function Win({userScore, setInWin, handlePostWinner}) {
                             type="text"
                             name="userName"
                             className="form-control text-center fw-bolder fs-4"
+                            required
                         />
                         <div className="input-group-btn">
                             <button type="submit" className="btn btn-lg btn-outline-success fw-bolder fs-4">
