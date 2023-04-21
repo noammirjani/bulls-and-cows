@@ -16,7 +16,8 @@ function MenuButtons({setInGame, setInWin, setInHighScore, initFunc}) {
     return (
         <Row className="d-flex justify-content-center text-center mb-5 mt-5">
             <Col>
-                <button className="btn btn-lg btn-outline-info fw-bolder fs-4" onClick={() => setRulesModal(!rulesModal)}>
+                <button className="btn btn-lg btn-outline-info fw-bolder fs-4"
+                        onClick={() => setRulesModal(!rulesModal)}>
                     Show Rules
                 </button>
             </Col>

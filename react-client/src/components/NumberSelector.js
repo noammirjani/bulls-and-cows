@@ -7,17 +7,17 @@ function NumberSelector({index, currGuesses, setGuess}){
         const newGuesses = currGuesses.map((val, i) => {
             return index === i ? newGuess : val;
         })
-
         setGuess(newGuesses);
     }
 
     return (
-        <Col className="col-7 col-md-3 mb-3">
-        <label>
+        <Col className="col-md-3 col-8 mb-1">
+        <label className="w-100">
             <select value={currGuesses[index]}
-                    className="form-select form-select-lg"
+                    className="form-control form-switch text-center w-100"
                     aria-label="Guess"
                     onChange={(e) => handleSelect(e.target.value)}
+                    style={{border: 'solid #BDD452', borderWidth: 3}}
             >
                 <option defaultValue>Guess...</option>
                 <option value="0">0</option>

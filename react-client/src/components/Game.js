@@ -2,7 +2,7 @@ import {Row} from "react-bootstrap";
 import CheckGuessButton from "./CheckGuessButton";
 import NumberSelector from "./NumberSelector";
 import UserMessages from "./UserMessages";
-import GuessingTable from "./GuessingTable";
+import Tables from "./Tables";
 
 
 function Game(props) {
@@ -30,7 +30,7 @@ function Game(props) {
                 <UserMessages userMessage={props.userMessage} variant={"warning"}/>
             </Row>
             <Row className="d-flex justify-content-center text-center mb-5 mt-5">
-                <GuessingTable cowsAndBulls={props.cowsAndBulls}/>
+                <Tables rowsData={props.cowsAndBulls} titles={["guess","bulls","cows"]} tableKey={"game"}/>
             </Row>
 
         </>

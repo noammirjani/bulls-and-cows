@@ -9,6 +9,7 @@ import HighScore from "./HighScore";
 import UserMessages from "./UserMessages";
 
 
+
 function Main() {
     //const variables
     const initialGuess = ['', '', '', ''];
@@ -25,7 +26,6 @@ function Main() {
     const [guessNumbers, setGuessNumbers] = useState(initialGuess);
     const [userMessage, setUserMessage] = useState(initialMsg);
     const [cowsAndBulls, setCowsAndBulls] = useState([]);
-
     const [hasError, setHasError]         = useState(false);
     const [error, setError]               = useState("");
     const [currHighscores, setCurrHighscores] = useState([]);
@@ -39,6 +39,7 @@ function Main() {
         console.log(digits);
         return [...digits];
     }
+
     function init() {
         setGuessNumbers(initialGuess);
         setCowsAndBulls([]);
@@ -47,11 +48,10 @@ function Main() {
     }
 
     function handleResponse(res) {
-        console.log(res.status)
+
         if (!res.ok) {
             throw new Error(`${res.status} ${res.statusText}`);
         }
-
         setHasError(false);
         return res.json();
     }
@@ -67,9 +67,6 @@ function Main() {
     }
 
     function handlePostWinner(name) {
-
-        console.log("post form fetch!!");
-
         const url = "/api/highscores"
         let params = {
             username: name,
@@ -91,9 +88,6 @@ function Main() {
     }
 
     function handleGetHighScore() {
-
-        console.log("get highscore fetch!!");
-
         const url = "/api/highscores"
 
         fetch(url,  {
@@ -115,7 +109,7 @@ function Main() {
         <>
             <div className="card mb-3 border-light" style={{backgroundColor: "#ffe4a9"}}>
                 <CardImage/>
-                <div className="card-body">
+                <div className="card-body border border-white">
                     <Container>
                         <MenuButtons
                             setInGame={setInGame}
