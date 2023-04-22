@@ -1,53 +1,111 @@
 package hac.javareact;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-
-/* You can delete this comment before submission - it's only here to help you get started.
-Your servlet should be available at "/java_react_war/api/highscores"
-assuming you don't modify the application's context path (/java_react_war).
-on the client side, you can send request to the servlet using:
-fetch("/java_react_war/api/highscores")
-*/
+import com.google.gson.Gson;
+import java.io.IOException;
 
 @WebServlet(name = "ServletApi", value = "/api/highscores")
 public class ApiServlet extends HttpServlet {
-    /**
-     *
-     * @param request
-     * @param response
-     * @throws IOException
-     */
+
+    private String realPath;
+    private static final String SCORES  = "scores.dat";
+    private static final Object writeLock = new Object();
+
+    public synchronized static List<User> readUsersFromFile() throws IOException, ClassNotFoundException {
+        try (ObjectInputStream objIn = new ObjectInputStream(new FileInputStream(SCORES))) {
+            return (List<User>) objIn.readObject();
+        }
+    }
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        // your code here
+        try {
+            List<User> users = readUsersFromFile();
+            users.sort((u1, u2) -> Integer.compare(u1.getScore(), u2.getScore())); // sort by score descending
+            List<User> topFive = users.subList(0, Math.min(users.size(), 5)); // get top five users
+            response(response, HttpServletResponse.SC_OK, topFive);
 
-        // note: this is necessary to allow cross-origin requests from the React frontend
-        // response.setHeader("Access-Control-Allow-Origin", "*");
-
-        // remove this line ! it's only for you to browse the template
-        response.getWriter().println("You are not supposed to browse this page. It will be used for API calls.");
+        } catch (IOException | ClassNotFoundException e) {
+            response(response, HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
     }
 
-    /**
-     *
-     * @param request
-     * @param response
-     * @throws IOException
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // your code here
 
-        // note: this is necessary to allow cross-origin requests from the React frontend
-        // response.setHeader("Access-Control-Allow-Origin", "*");
+        try {
+            User newUser = getNewUser(request);
 
+            List<User> users;
+            try {
+                users = readUsersFromFile();
+            } catch (IOException | ClassNotFoundException e) {
+                users = new ArrayList<>();
+            }
+
+            updateUsersData(newUser, users);
+
+            synchronized(this) {
+                try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(SCORES))) {
+                    objOut.writeObject(users);
+                }
+            }
+
+            response(response, HttpServletResponse.SC_OK, "user added!");
+        }
+        catch(Exception e){
+            response(response, HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    private void updateUsersData(User newUser, List<User> users) {
+        boolean found = false;
+
+        for (User user : users) {
+            if (user.getName().equals(newUser.getName())) {
+                if(user.getScore() > newUser.getScore()) user.setScore(newUser.getScore());
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            users.add(newUser);
+        }
+    }
+
+    private User getNewUser(HttpServletRequest request) {
+
+        //get the data from body of the request
+        String username = request.getParameter("username");
+        int score = Integer.parseInt(request.getParameter("score"));
+
+        //validation in setting
+        User newUser = new User();
+        newUser.setName(username);
+        newUser.setScore(score);
+
+        return newUser;
+    }
+
+    public void response(HttpServletResponse res, int code, Object data)  throws IOException{
+        res.setContentType("application/json");
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setStatus(code);
+        Gson gson = new Gson();
+        String json = gson.toJson(data);
+        res.getWriter().write(json);
     }
 
     @Override
     public void init() {
+        this.realPath = getServletContext().getRealPath(".");
     }
 
     @Override

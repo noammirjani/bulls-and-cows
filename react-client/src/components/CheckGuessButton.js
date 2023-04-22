@@ -39,7 +39,7 @@ function CheckGuessButton({actualNumbers, currGuesses, setMsg, cowsAndBulls, set
 
     function checkWin(bulls, cows) {
         if (bulls === MAX_BULLS && cows === MAX_COWS) {
-            setScore({score : cowsAndBulls.length+1, userName: ""});
+            setScore(cowsAndBulls.length+1);
             setInWin(true);
             setInGame(false);
         }

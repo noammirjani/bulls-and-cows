@@ -6,6 +6,7 @@ import Game from "./Game";
 import Win from "./Win";
 import MenuButtons from "./MenuButtons";
 import HighScore from "./HighScore";
+import UserMessages from "./UserMessages";
 
 
 function Main() {
@@ -17,14 +18,17 @@ function Main() {
     const [inGame, setInGame] = useState(true);
     const [inWin, setInWin] = useState(false);
     const [inHighScore, setInHighScore] = useState(false);
-    const [winnerSubmit, setWinnerSubmit] = useState(false);
 
     //user / game data
-    const [winnerData, setWinnerData] = useState({score : 0, userName:""});
+    const [userScore, setUserScore] = useState(0);
     const [actualNumbers, setActualNumbers] = useState(() => generateRandom());
     const [guessNumbers, setGuessNumbers] = useState(initialGuess);
     const [userMessage, setUserMessage] = useState(initialMsg);
     const [cowsAndBulls, setCowsAndBulls] = useState([]);
+
+    const [hasError, setHasError]         = useState(false);
+    const [error, setError]               = useState("");
+    const [currHighscores, setCurrHighscores] = useState([]);
 
     function generateRandom() {
         // Generate a random array of numbers
@@ -42,6 +46,70 @@ function Main() {
         setActualNumbers(generateRandom());
     }
 
+    function handleResponse(res) {
+        console.log(res.status)
+        if (!res.ok) {
+            throw new Error(`${res.status} ${res.statusText}`);
+        }
+
+        setHasError(false);
+        return res.json();
+    }
+
+    function handleJson(jsonObj) {
+        setCurrHighscores(jsonObj);
+        console.log(jsonObj)
+    }
+
+    function handleError(error) {
+        setHasError(true);
+        setError("Some error occurred:" + error.toString());
+    }
+
+    function handlePostWinner(name) {
+
+        console.log("post form fetch!!");
+
+        const url = "/api/highscores"
+        let params = {
+            username: name,
+            score: userScore
+        };
+
+        fetch(url,  {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'datatype': 'json'
+            },
+            body: new URLSearchParams(params).toString()
+        })
+            .then(handleResponse)
+            .then(handleJson)
+            .then(handleGetHighScore)
+            .catch(handleError);
+    }
+
+    function handleGetHighScore() {
+        setInWin(false);
+        console.log("get highscore fetch!!");
+
+        const url = "/api/highscores"
+
+        fetch(url,  {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'datatype': 'json'
+            }
+        })
+            .then(handleResponse)
+            .then(handleJson)
+            .then(()=> setInHighScore(true) )
+            .catch(handleError);
+    }
+
+
 
     return (
         <>
@@ -55,10 +123,11 @@ function Main() {
                             setInHighScore={setInHighScore}
                             initFunc={init}
                         />
+                        {hasError && <UserMessages userMessage= {error} variant={"danger"} />}
                         {inGame &&
                             <Game setInWin={setInWin}
                                   setInGame={setInGame}
-                                  setScore={setWinnerData}
+                                  setScore={setUserScore}
                                   actualNumbers={actualNumbers}
                                   guessNumbers={guessNumbers}
                                   userMessage={userMessage}
@@ -70,16 +139,13 @@ function Main() {
                         }
                         {inWin &&
                             <Win
-                                setWinnerData={setWinnerData}
-                                winnerData={winnerData}
+                                userScore={userScore}
                                 setInWin={setInWin}
-                                setInHighScore={setInHighScore}
-                                setWinnerSubmit={setWinnerSubmit}
+                                handlePostWinner={handlePostWinner}
                             />
                         }
                         {inHighScore && <HighScore
-                            setInGame={setInGame}
-                            setInHighScore={setInHighScore}
+                            currHighscores={currHighscores}
                             />
                         }
                     </Container>
