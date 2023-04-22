@@ -1,6 +1,6 @@
 import Table from "./Tables";
 
-/**
+/*
  * HighScore component displays the current high scores of the game. It receives an array of player stats objects
  * and renders a table showing the player's name and their score.
  *

@@ -4,6 +4,7 @@ import CheckGuessButton from "./CheckGuessButton";
 import UserMessages from "./UserMessages";
 import Tables from "./Tables";
 
+
 /**
  * Game component is the main component for the Bulls and Cows game. It displays the number selector, check guess button,
  * user messages, and guessing table. The component receives various props that it uses to manage the game state and

@@ -17,8 +17,8 @@ function NumberSelector({index, currGuesses, setGuess}) {
      *
      * @param {string} newGuess - The new selected digit for the guess.
      */
-    function handleSelect(newGuess) {
 
+    function handleSelect(newGuess) {
         const newGuesses = currGuesses.map((val, i) => {
             return index === i ? newGuess : val;
         })

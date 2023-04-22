@@ -7,8 +7,7 @@ import Win from "./Win";
 import HighScore from "./HighScore";
 import {useState} from "react";
 
-
-/**
+/*
  * Main component is the root component of the game. It contains the game logic and renders other components.
  * It manages the state of the game, user data and handles API calls to store and retrieve high scores.
  *
@@ -32,7 +31,6 @@ function Main() {
 
     // win state
     const [userScore, setUserScore] = useState(0);
-
     const [error, setError] = useState("");
     const [currHighscores, setCurrHighscores] = useState([]);
 
@@ -49,7 +47,6 @@ function Main() {
         console.log(digits);
         return [...digits];
     }
-
 
     /**
      * Resets the game to its initial state.
@@ -80,7 +77,6 @@ function Main() {
 
     /**
      * Handles the JSON data returned by a fetch request.
-     *
      * @param {object} jsonObj - The JSON data returned by the request.
      */
     function handleJson(jsonObj) {
@@ -89,7 +85,6 @@ function Main() {
 
     /**
      * Handles errors that occur during a fetch request.
-     *
      * @param {object} error - The error object.
      */
     function handleError(error) {
@@ -98,7 +93,6 @@ function Main() {
 
     /**
      * Sends a POST request to the server to save the user's name and score to the high scores list.
-     *
      * @param {string} name - The user's name.
      */
     function handlePostWinner(name) {
@@ -143,7 +137,6 @@ function Main() {
             .catch(handleError);
     }
 
-
     return (
         <>
             <div className="card mb-3 border-light" style={{backgroundColor: "#ffe4a9"}}>
@@ -168,10 +161,9 @@ function Main() {
                                          setCowsAndBulls={setCowsAndBulls}
                             />
                         }
-                        {inWin &&
-                            <Win userScore={userScore}
-                                 setInWin={setInWin}
-                                 handlePostWinner={handlePostWinner}
+                        {inWin && <Win userScore={userScore}
+                                       setInWin={setInWin}
+                                       handlePostWinner={handlePostWinner}
                             />
                         }
                         {inHighScore && <HighScore currHighscores={currHighscores}/>}
