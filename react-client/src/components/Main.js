@@ -91,7 +91,7 @@ function Main() {
     }
 
     function handleGetHighScore() {
-
+        setInWin(false);
         console.log("get highscore fetch!!");
 
         const url = "/api/highscores"

@@ -2,14 +2,12 @@ import {Row} from "react-bootstrap";
 import UserMessages from "./UserMessages";
 
 
-function Win({userScore, setInWin, handlePostWinner}) {
+function Win({userScore, handlePostWinner}) {
 
     const variant = "success large-alert text-uppercase";
 
     function handleSubmit(event){
         event.preventDefault();
-        console.log(event.target.userName.value)
-        setInWin(false);
         handlePostWinner(event.target.userName.value);
     }
 
@@ -26,6 +24,8 @@ function Win({userScore, setInWin, handlePostWinner}) {
                         <input
                             placeholder="Enter username:"
                             type="text"
+                            pattern="^[a-zA-Z]+$"
+                            title="Only Letters !"
                             name="userName"
                             className="form-control text-center fw-bolder fs-4"
                             required

@@ -15,7 +15,7 @@ public class ApiServlet extends HttpServlet {
     private static final String SCORES  = "scores.dat";
     private static final Object writeLock = new Object();
 
-    public static List<User> readUsersFromFile() throws IOException, ClassNotFoundException {
+    public synchronized static List<User> readUsersFromFile() throws IOException, ClassNotFoundException {
         try (ObjectInputStream objIn = new ObjectInputStream(new FileInputStream(SCORES))) {
             return (List<User>) objIn.readObject();
         }
@@ -51,8 +51,10 @@ public class ApiServlet extends HttpServlet {
 
             updateUsersData(newUser, users);
 
-            try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(SCORES))) {
-                objOut.writeObject(users);
+            synchronized(this) {
+                try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(SCORES))) {
+                    objOut.writeObject(users);
+                }
             }
 
             response(response, HttpServletResponse.SC_OK, "user added!");

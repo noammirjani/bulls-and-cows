@@ -8,24 +8,19 @@ public class User implements Serializable {
     private String username;
     private int score;
 
+    public void setName(String name) {
 
+        if(!name.matches("^[a-zA-Z]+$"))
+            throw new IllegalArgumentException("name can contains only letters!");
 
-/*    public User(){
-    }*/
+        this.username = name;
 
-    public void validateUser(String name, int score){
+    }
+    public void setScore(int score) {
 
         if(score < 0)
             throw new IllegalArgumentException("score can not be negative!");
 
-        if(!name.matches("^[a-zA-Z]+$"))
-            throw new IllegalArgumentException("name can contains only letters!");
-    }
-
-    public void setName(String name) {
-        this.username = name;
-    }
-    public void setScore(int score) {
         this.score = score;
     }
     public int getScore() {return this.score;}
