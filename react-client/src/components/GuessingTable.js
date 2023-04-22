@@ -1,13 +1,17 @@
-import {forEach} from "react-bootstrap/ElementChildren";
 import GuessingRow from "./GuessingRow";
 
+/**
+ * GuessingTable component is a table that displays the player's guesses and their results (number of bulls and cows).
+ *
+ * @param {object[]} cowsAndBulls - The array of objects containing the player's guesses and their results.
+ * @returns a JSX element containing the guessing table.
+ */
 function GuessingTable({cowsAndBulls}) {
 
     const rows = [];
 
     cowsAndBulls.forEach((data, index) => {
         rows.push(<GuessingRow guessData={data} key={index}/>)
-
     })
 
     return (
@@ -24,4 +28,4 @@ function GuessingTable({cowsAndBulls}) {
     );
 }
 
-export default GuessingTable
+export default GuessingTable;
