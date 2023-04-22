@@ -9,7 +9,16 @@
 * Name: Noam Mirjani  Email: noammir@edu.hac.ac.il
 
 ![App Screenshot](react-client/public/assets/CowAndBull.jpg)
+#### Clone the repository using the command below
 
+```bash
+
+git clone https://github.com/Solange-s-Courses/ex3-react-java-ex3_ariel_amon_noam_mirjani.git
+
+```
+
+
+<a href=”api/index.html”>API documentation</a>
 
 ## Explanations
 This is a web-based implementation of the Bulls and Cows game, also known as Mastermind. In this game, the computer selects a four-digit number, and the player must guess the number within seven tries. Each guess is evaluated and the player is given feedback in terms of "Bulls" and "Cows" - "Bulls" represent correct digits in the right position, while "Cows" represent correct digits in the wrong position.
