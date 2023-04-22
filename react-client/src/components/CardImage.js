@@ -1,5 +1,9 @@
-
-
+/**
+ * CardImage component displays an image with text on top of it. The text says "bulls&cows".
+ * The image is a thumbnail of a picture named "CowAndBull.jpg" located in the "/assets" folder.
+ *
+ * @returns a JSX element containing an image and text on top of it.
+ */
 function CardImage (){
     return (
         <div className="position-relative d-inline-block">
