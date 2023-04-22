@@ -2,10 +2,16 @@ import { Col } from "react-bootstrap";
 
 /**
  * CheckGuessButton component displays a button that allows the user to check their current guess.
- * The component takes in several props: actualNumbers (the correct guess), currGuesses (the current guess),
- * setMsg (a function to set the message displayed to the user), cowsAndBulls (an array to store past guesses and results),
- * setCowsAndBulls (a function to update the array cowsAndBulls), setInWin (a function to indicate if the user has won the game),
- * setInGame (a function to indicate if the game is still in progress), and setScore (a function to update the user's score).
+ *
+ * @param {Object} props - The props object containing the various props used by the component.
+ * @param {number[]} props.actualNumbers - The array of numbers representing the secret code.
+ * @param {number[]} props.currGuesses - The array of numbers representing the player's current guess.
+ * @param {function} props.setMsg - The function used to set the message displayed to the user.
+ * @param {Object[]} props.cowsAndBulls - The array of objects representing the player's guesses and their results.
+ * @param {function} props.setCowsAndBulls - The function used to set the array of cows and bulls.
+ * @param {function} props.setInWin - The function used to set the win state.
+ * @param {function} props.setInGame - The function used to set the game state.
+ * @param {function} props.setScore - The function used to set the player's score.
  *
  * @returns a JSX element containing a button for checking the user's guess.
  */
