@@ -10,29 +10,29 @@ import {Col} from "react-bootstrap";
  * @param {function} setGuess - The function to update the current guess array.
  * @returns a JSX element containing a select input for choosing a digit in the guess.
  */
-function NumberSelector({index, currGuesses, setGuess}){
+function NumberSelector({index, currGuesses, setGuess}) {
 
     /**
      * Handles updating the current guess array with the new selected digit.
      *
      * @param {string} newGuess - The new selected digit for the guess.
      */
-    function handleSelect(newGuess){
 
+    function handleSelect(newGuess) {
         const newGuesses = currGuesses.map((val, i) => {
             return index === i ? newGuess : val;
         })
-
         setGuess(newGuesses);
     }
 
     return (
-        <Col className="col-7 col-md-3 mb-3">
-            <label>
+        <Col className="col-md-3 col-8 mb-1">
+            <label className="w-100">
                 <select value={currGuesses[index]}
-                        className="form-select form-select-lg"
+                        className="form-control form-switch text-center w-100"
                         aria-label="Guess"
                         onChange={(e) => handleSelect(e.target.value)}
+                        style={{border: 'solid #BDD452', borderWidth: 3}}
                 >
                     <option defaultValue>Guess...</option>
                     <option value="0">0</option>
@@ -49,7 +49,6 @@ function NumberSelector({index, currGuesses, setGuess}){
             </label>
         </Col>
     );
-
 }
 
 export default NumberSelector;

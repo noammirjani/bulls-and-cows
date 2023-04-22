@@ -27,7 +27,9 @@ function Win({userScore, handlePostWinner}) {
     return (
         <>
             <Row className=" d-flex justify-content-center" >
-                <UserMessages userMessage={`you win! your score is ${userScore}!`} variant={variant} className="text-uppercase" />
+                <UserMessages userMessage={`you win! your score is ${userScore}!`}
+                              variant={variant}
+                              className="text-uppercase" />
             </Row>
 
             <Row className="d-flex justify-content-center text-center">

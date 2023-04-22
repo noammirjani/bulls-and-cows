@@ -48,6 +48,7 @@ function CheckGuessButton({actualNumbers, currGuesses, setMsg, cowsAndBulls, set
     function calculateGuess() {
         let bulls, cows;
         bulls = cows = 0;
+
         for (let i = 0; i < currGuesses.length; i++) {
             if (actualNumbers[i] === currGuesses[i]) bulls++;
             else if (actualNumbers[i] !== currGuesses[i] && actualNumbers.includes(currGuesses[i])) cows++;
@@ -92,7 +93,8 @@ function CheckGuessButton({actualNumbers, currGuesses, setMsg, cowsAndBulls, set
     return (
         <>
             <Col>
-                <button type="button" className="btn btn-lg btn-outline-success fw-bolder fs-4"
+                <button type="button"
+                        className="btn btn-lg btn-outline-success fw-bolder fs-4"
                         onClick={checkGuess}>
                     Check Your Guess
                 </button>

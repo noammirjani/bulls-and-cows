@@ -2,7 +2,8 @@ import NumberSelector from "./NumberSelector";
 import {Row} from "react-bootstrap";
 import CheckGuessButton from "./CheckGuessButton";
 import UserMessages from "./UserMessages";
-import GuessingTable from "./GuessingTable";
+import Tables from "./Tables";
+
 
 /**
  * Game component is the main component for the Bulls and Cows game. It displays the number selector, check guess button,
@@ -50,7 +51,7 @@ function Game(props) {
                 <UserMessages userMessage={props.userMessage} variant={"warning"}/>
             </Row>
             <Row className="d-flex justify-content-center text-center mb-5 mt-5">
-                <GuessingTable cowsAndBulls={props.cowsAndBulls}/>
+                <Tables rowsData={props.cowsAndBulls} titles={["guess","bulls","cows"]}/>
             </Row>
 
         </>

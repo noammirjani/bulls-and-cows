@@ -7,7 +7,7 @@ import Win from "./Win";
 import HighScore from "./HighScore";
 import {useState} from "react";
 
-/**
+/*
  * Main component is the root component of the game. It contains the game logic and renders other components.
  * It manages the state of the game, user data and handles API calls to store and retrieve high scores.
  *
@@ -23,14 +23,14 @@ function Main() {
     const [inWin, setInWin] = useState(false);
     const [inHighScore, setInHighScore] = useState(false);
 
-    //user / game data
-    const [userScore, setUserScore] = useState(0);
+    // game states
     const [actualNumbers, setActualNumbers] = useState(() => generateRandom());
     const [guessNumbers, setGuessNumbers] = useState(initialGuess);
-    const [userMessage, setUserMessage] = useState(initialMsg);
+    const [gameMessage, setGameMessage] = useState(initialMsg);
     const [cowsAndBulls, setCowsAndBulls] = useState([]);
 
-    const [hasError, setHasError] = useState(false);
+    // win state
+    const [userScore, setUserScore] = useState(0);
     const [error, setError] = useState("");
     const [currHighscores, setCurrHighscores] = useState([]);
 
@@ -54,8 +54,9 @@ function Main() {
     function init() {
         setGuessNumbers(initialGuess);
         setCowsAndBulls([]);
-        setUserMessage(initialMsg);
+        setGameMessage(initialMsg);
         setActualNumbers(generateRandom());
+        setError("");
     }
 
     /**
@@ -66,44 +67,35 @@ function Main() {
      * @throws {Error} if the response is not ok.
      */
     function handleResponse(res) {
-        console.log(res.status)
+
         if (!res.ok) {
             throw new Error(`${res.status} ${res.statusText}`);
         }
-
-        setHasError(false);
+        setError("");
         return res.json();
     }
 
     /**
      * Handles the JSON data returned by a fetch request.
-     *
      * @param {object} jsonObj - The JSON data returned by the request.
      */
     function handleJson(jsonObj) {
         setCurrHighscores(jsonObj);
-        console.log(jsonObj)
     }
 
     /**
      * Handles errors that occur during a fetch request.
-     *
      * @param {object} error - The error object.
      */
     function handleError(error) {
-        setHasError(true);
         setError("Some error occurred:" + error.toString());
     }
 
     /**
      * Sends a POST request to the server to save the user's name and score to the high scores list.
-     *
      * @param {string} name - The user's name.
      */
     function handlePostWinner(name) {
-
-        console.log("post form fetch!!");
-
         const url = "/api/highscores"
         let params = {
             username: name,
@@ -128,9 +120,8 @@ function Main() {
      * Sends a GET request to the server to retrieve the current high scores list.
      */
     function handleGetHighScore() {
-        setInWin(false);
-        console.log("get highscore fetch!!");
 
+        setInWin(false);
         const url = "/api/highscores"
 
         fetch(url, {
@@ -150,39 +141,32 @@ function Main() {
         <>
             <div className="card mb-3 border-light" style={{backgroundColor: "#ffe4a9"}}>
                 <CardImage/>
-                <div className="card-body">
+                <div className="card-body border border-white">
                     <Container>
-                        <MenuButtons
-                            setInGame={setInGame}
-                            setInWin={setInWin}
-                            setInHighScore={setInHighScore}
-                            initFunc={init}
+                        <MenuButtons setInGame={setInGame}
+                                     setInWin={setInWin}
+                                     setInHighScore={setInHighScore}
+                                     initFunc={init}
                         />
-                        {hasError && <UserMessages userMessage={error} variant={"danger"}/>}
-                        {inGame &&
-                            <Game setInWin={setInWin}
-                                  setInGame={setInGame}
-                                  setScore={setUserScore}
-                                  actualNumbers={actualNumbers}
-                                  guessNumbers={guessNumbers}
-                                  userMessage={userMessage}
-                                  cowsAndBulls={cowsAndBulls}
-                                  setGuessNumbers={setGuessNumbers}
-                                  setUserMessage={setUserMessage}
-                                  setCowsAndBulls={setCowsAndBulls}
+                        {error && <UserMessages userMessage={error} variant={"danger"}/>}
+                        {inGame && <Game setInWin={setInWin}
+                                         setInGame={setInGame}
+                                         setScore={setUserScore}
+                                         actualNumbers={actualNumbers}
+                                         guessNumbers={guessNumbers}
+                                         userMessage={gameMessage}
+                                         cowsAndBulls={cowsAndBulls}
+                                         setGuessNumbers={setGuessNumbers}
+                                         setUserMessage={setGameMessage}
+                                         setCowsAndBulls={setCowsAndBulls}
                             />
                         }
-                        {inWin &&
-                            <Win
-                                userScore={userScore}
-                                setInWin={setInWin}
-                                handlePostWinner={handlePostWinner}
+                        {inWin && <Win userScore={userScore}
+                                       setInWin={setInWin}
+                                       handlePostWinner={handlePostWinner}
                             />
                         }
-                        {inHighScore && <HighScore
-                            currHighscores={currHighscores}
-                        />
-                        }
+                        {inHighScore && <HighScore currHighscores={currHighscores}/>}
                     </Container>
                 </div>
             </div>
