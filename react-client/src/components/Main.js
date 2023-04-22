@@ -24,13 +24,15 @@ function Main() {
     const [inWin, setInWin] = useState(false);
     const [inHighScore, setInHighScore] = useState(false);
 
-    //user / game data
-    const [userScore, setUserScore] = useState(0);
+    // game states
     const [actualNumbers, setActualNumbers] = useState(() => generateRandom());
     const [guessNumbers, setGuessNumbers] = useState(initialGuess);
-    const [userMessage, setUserMessage] = useState(initialMsg);
+    const [gameMessage, setGameMessage] = useState(initialMsg);
     const [cowsAndBulls, setCowsAndBulls] = useState([]);
-    const [hasError, setHasError] = useState(false);
+
+    // win state
+    const [userScore, setUserScore] = useState(0);
+
     const [error, setError] = useState("");
     const [currHighscores, setCurrHighscores] = useState([]);
 
@@ -55,8 +57,9 @@ function Main() {
     function init() {
         setGuessNumbers(initialGuess);
         setCowsAndBulls([]);
-        setUserMessage(initialMsg);
+        setGameMessage(initialMsg);
         setActualNumbers(generateRandom());
+        setError("");
     }
 
     /**
@@ -71,7 +74,7 @@ function Main() {
         if (!res.ok) {
             throw new Error(`${res.status} ${res.statusText}`);
         }
-        setHasError(false);
+        setError("");
         return res.json();
     }
 
@@ -82,7 +85,6 @@ function Main() {
      */
     function handleJson(jsonObj) {
         setCurrHighscores(jsonObj);
-        console.log(jsonObj)
     }
 
     /**
@@ -91,7 +93,6 @@ function Main() {
      * @param {object} error - The error object.
      */
     function handleError(error) {
-        setHasError(true);
         setError("Some error occurred:" + error.toString());
     }
 
@@ -142,6 +143,7 @@ function Main() {
             .catch(handleError);
     }
 
+
     return (
         <>
             <div className="card mb-3 border-light" style={{backgroundColor: "#ffe4a9"}}>
@@ -153,16 +155,16 @@ function Main() {
                                      setInHighScore={setInHighScore}
                                      initFunc={init}
                         />
-                        {hasError && <UserMessages userMessage={error} variant={"danger"}/>}
+                        {error && <UserMessages userMessage={error} variant={"danger"}/>}
                         {inGame && <Game setInWin={setInWin}
                                          setInGame={setInGame}
                                          setScore={setUserScore}
                                          actualNumbers={actualNumbers}
                                          guessNumbers={guessNumbers}
-                                         userMessage={userMessage}
+                                         userMessage={gameMessage}
                                          cowsAndBulls={cowsAndBulls}
                                          setGuessNumbers={setGuessNumbers}
-                                         setUserMessage={setUserMessage}
+                                         setUserMessage={setGameMessage}
                                          setCowsAndBulls={setCowsAndBulls}
                             />
                         }
