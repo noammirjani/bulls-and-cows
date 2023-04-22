@@ -1,5 +1,5 @@
-function Tables({ rowsData, titles, tableKey }) {
-    const titleRows = titles.map((title) => <th className="text-nowrap">{title}</th>);
+function Tables({ rowsData, titles }) {
+    const titleRows = titles.map((title, index) => <th key={index} className="text-nowrap">{title}</th>);
 
     const rows = rowsData.map((data, index) => {
         const cells = titles.map((title) => (
@@ -7,6 +7,7 @@ function Tables({ rowsData, titles, tableKey }) {
         ));
         return <tr key={index} className="fw-bolder fs-6">{cells}</tr>;
     });
+
 
 
     return (
