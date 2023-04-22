@@ -1,15 +1,28 @@
 import {Row} from "react-bootstrap";
 import UserMessages from "./UserMessages";
 
-
+/**
+ * Win component is displayed when the user wins the game. It receives the user's score and a function to handle the
+ * submission of the user's name for the high score table.
+ *
+ * @param {number} userScore - The user's score.
+ * @param {function} handlePostWinner - The function to handle the submission of the user's name for the high score table.
+ * @returns a JSX element containing a message congratulating the user on winning the game and a form to submit the
+ * user's name for the high score table.
+ */
 function Win({userScore, handlePostWinner}) {
 
-    const variant = "success large-alert text-uppercase";
-
+    /**
+     * Handles the submission of the user's name for the high score table.
+     *
+     * @param {event} event - The form submission event.
+     */
     function handleSubmit(event){
         event.preventDefault();
         handlePostWinner(event.target.userName.value);
     }
+
+    const variant = "success large-alert text-uppercase";
 
     return (
         <>

@@ -1,4 +1,9 @@
-
+/**
+ * GameRules component displays the rules of the Bulls and Cows game. It explains the game's objective,
+ * how to play the game, and what the "Exist" and "Match" columns in the guessing table mean.
+ *
+ * @returns a JSX element containing the rules of the game.
+ */
 function GameRules() {
     return (
         <div className="card mt-3">

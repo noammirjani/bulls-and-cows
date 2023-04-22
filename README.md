@@ -1,12 +1,23 @@
+
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/YDg-_nm7)
+
+
+# 🐂 🐂 BULLS AND COWS 🐄🐄
+
 ## Authors
 * Name: Ariel Amon   Email: arielam@edu.hac.ac.il
 * Name: Noam Mirjani  Email: noammir@edu.hac.ac.il
 
+![App Screenshot](react-client/public/assets/CowAndBull.jpg)
+
+
 ## Explanations
+This is a web-based implementation of the Bulls and Cows game, also known as Mastermind. In this game, the computer selects a four-digit number, and the player must guess the number within seven tries. Each guess is evaluated and the player is given feedback in terms of "Bulls" and "Cows" - "Bulls" represent correct digits in the right position, while "Cows" represent correct digits in the wrong position.
 
-(Explain here your project)
+## Acknowledgements
+This game was inspired by the Bulls and Cows game and the Mastermind game, but with a few modifications to the typical game mechanics. In this implementation, each number has 4 unique digits, so duplicate digits are not allowed in the player's guesses. This change is intended to help the player improve their score. Speaking of score, the player's score is equal to the number of guesses they make, with a lower score being better. The minimum possible score is 1.
 
+The high score screen displays the top 5 users with the best scores. We only store basic data for each user, including their name and their best score. If a user submits a new score that is better than their existing score, we update their score accordingly. Worst scores do not affect the user's stored data.
 ## How to use this template
 This is the template for a project where front-end and back-end are separated.
 The front-end is a React application, the back-end is a Java Web application
@@ -48,4 +59,3 @@ Then browse:
 * your react client at http://localhost:3000
 * your server will be available at http://localhost:8080/api/highscores (you have of course to implement the REST API).
   Note that you should never specify the host and port in your React code! (use 'api/' instead of 'http://localhost:8080/api/')
-
