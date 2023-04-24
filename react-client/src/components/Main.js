@@ -1,11 +1,11 @@
-import CardImage from "./CardImage";
 import {Container} from "react-bootstrap";
+import {useState} from "react";
+import CardImage from "./CardImage";
 import MenuButtons from "./MenuButtons";
 import UserMessages from "./UserMessages";
 import Game from "./Game";
 import Win from "./Win";
 import HighScore from "./HighScore";
-import {useState} from "react";
 
 /*
  * Main component is the root component of the game. It contains the game logic and renders other components.
@@ -105,7 +105,7 @@ function Main() {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'datatype': 'json'
             },
-            body: new URLSearchParams(params).toString
+            body: new URLSearchParams(params).toString()
         })
             .then(handleResponse)
             .then(handleJson)
@@ -117,8 +117,6 @@ function Main() {
      * Sends a GET request to the server to retrieve the current high scores list.
      */
     function handleGetHighScore() {
-
-        setGameState(HIGHSCORES);
         const url = "/api/highscores"
 
         fetch(url, {
@@ -130,6 +128,7 @@ function Main() {
         })
             .then(handleResponse)
             .then(handleJson)
+            .then(() => setGameState(HIGHSCORES))
             .catch(handleError);
     }
 
@@ -149,7 +148,7 @@ function Main() {
                                                      setGuessNumbers={setGuessNumbers}
                                                      setUserMessage={setGameMessage}
                                                      setCowsAndBulls={setCowsAndBulls}
-                                                     setState={setGameState}
+                                                     setGameState={setGameState}
                         />}
                         {gameState === WIN && <Win userScore={userScore} handlePostWinner={handlePostWinner}/>}
                         {gameState === HIGHSCORES && <HighScore currHighscores={currHighscores}/>}

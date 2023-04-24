@@ -26,7 +26,7 @@ function NumberSelector({index, currGuesses, setGuess}) {
     }
 
     return (
-        <Col className="col-md-3 col-8 mb-1">
+        <Col className="col-md-3 col-8 mb-2">
             <label className="w-100">
                 <select value={currGuesses[index]}
                         className="form-control form-switch text-center w-100"

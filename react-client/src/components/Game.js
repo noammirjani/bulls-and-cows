@@ -41,7 +41,7 @@ function Game(props) {
                                   cowsAndBulls={props.cowsAndBulls}
                                   setCowsAndBulls={props.setCowsAndBulls}
                                   setScore={props.setScore}
-                                  setState={props.setState}
+                                  setGameState={props.setGameState}
                 />
             </Row>
             <Row className="d-flex justify-content-center text-center mb-5 mt-5">

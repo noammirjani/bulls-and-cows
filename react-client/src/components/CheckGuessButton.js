@@ -74,7 +74,7 @@ function CheckGuessButton(props) {
     function checkWin(bulls, cows) {
         if (bulls === MAX_BULLS && cows === MAX_COWS) {
             props.setScore(props.cowsAndBulls.length + 1);
-            props.setState("win");
+            props.setGameState("win");
         }
     }
 
