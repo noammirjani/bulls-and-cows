@@ -17,11 +17,7 @@ function Main() {
     //const variables
     const initialGuess = ['', '', '', ''];
     const initialMsg = "Your history of guesses will appear below:";
-
-    // state of the game
-    const [inGame, setInGame] = useState(true);
-    const [inWin, setInWin] = useState(false);
-    const [inHighScore, setInHighScore] = useState(false);
+    const [GAME, WIN, HIGHSCORES] = ["game", "win", "highscore"];
 
     // game states
     const [actualNumbers, setActualNumbers] = useState(() => generateRandom());
@@ -29,7 +25,8 @@ function Main() {
     const [gameMessage, setGameMessage] = useState(initialMsg);
     const [cowsAndBulls, setCowsAndBulls] = useState([]);
 
-    // win state
+    // control game screens
+    const [gameState, setGameState] = useState(GAME);
     const [userScore, setUserScore] = useState(0);
     const [error, setError] = useState("");
     const [currHighscores, setCurrHighscores] = useState([]);
@@ -52,6 +49,7 @@ function Main() {
      * Resets the game to its initial state.
      */
     function init() {
+        setGameState(GAME);
         setGuessNumbers(initialGuess);
         setCowsAndBulls([]);
         setGameMessage(initialMsg);
@@ -67,7 +65,6 @@ function Main() {
      * @throws {Error} if the response is not ok.
      */
     function handleResponse(res) {
-
         if (!res.ok) {
             throw new Error(`${res.status} ${res.statusText}`);
         }
@@ -121,7 +118,7 @@ function Main() {
      */
     function handleGetHighScore() {
 
-        setInWin(false);
+        setGameState(HIGHSCORES);
         const url = "/api/highscores"
 
         fetch(url, {
@@ -133,7 +130,6 @@ function Main() {
         })
             .then(handleResponse)
             .then(handleJson)
-            .then(() => setInHighScore(true))
             .catch(handleError);
     }
 
@@ -143,30 +139,20 @@ function Main() {
                 <CardImage/>
                 <div className="card-body border border-white">
                     <Container>
-                        <MenuButtons setInGame={setInGame}
-                                     setInWin={setInWin}
-                                     setInHighScore={setInHighScore}
-                                     initFunc={init}
-                        />
+                        <MenuButtons initFunc={init}/>
                         {error && <UserMessages userMessage={error} variant={"danger"}/>}
-                        {inGame && <Game setInWin={setInWin}
-                                         setInGame={setInGame}
-                                         setScore={setUserScore}
-                                         actualNumbers={actualNumbers}
-                                         guessNumbers={guessNumbers}
-                                         userMessage={gameMessage}
-                                         cowsAndBulls={cowsAndBulls}
-                                         setGuessNumbers={setGuessNumbers}
-                                         setUserMessage={setGameMessage}
-                                         setCowsAndBulls={setCowsAndBulls}
-                            />
-                        }
-                        {inWin && <Win userScore={userScore}
-                                       setInWin={setInWin}
-                                       handlePostWinner={handlePostWinner}
-                            />
-                        }
-                        {inHighScore && <HighScore currHighscores={currHighscores}/>}
+                        {gameState === GAME && <Game setScore={setUserScore}
+                                                     actualNumbers={actualNumbers}
+                                                     guessNumbers={guessNumbers}
+                                                     userMessage={gameMessage}
+                                                     cowsAndBulls={cowsAndBulls}
+                                                     setGuessNumbers={setGuessNumbers}
+                                                     setUserMessage={setGameMessage}
+                                                     setCowsAndBulls={setCowsAndBulls}
+                                                     setState={setGameState}
+                        />}
+                        {gameState === WIN && <Win userScore={userScore} handlePostWinner={handlePostWinner}/>}
+                        {gameState === HIGHSCORES && <HighScore currHighscores={currHighscores}/>}
                     </Container>
                 </div>
             </div>

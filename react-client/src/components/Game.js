@@ -19,9 +19,7 @@ import Tables from "./Tables";
  * @param {object[]} props.cowsAndBulls - The array of objects representing the player's guesses and their results.
  * @param {function} props.setCowsAndBulls - The function used to set the array of cows and bulls.
  * @param {boolean} props.inWin - A boolean value indicating if the player has won the game.
- * @param {function} props.setInWin - The function used to set the win state.
  * @param {boolean} props.inGame - A boolean value indicating if the game is still in progress.
- * @param {function} props.setInGame - The function used to set the game state.
  * @param {number} props.score - The player's current score.
  * @param {function} props.setScore - The function used to set the player's score.
  * @returns a JSX element containing the various game components.
@@ -42,9 +40,8 @@ function Game(props) {
                                   setMsg={props.setUserMessage}
                                   cowsAndBulls={props.cowsAndBulls}
                                   setCowsAndBulls={props.setCowsAndBulls}
-                                  setInWin={props.setInWin}
-                                  setInGame={props.setInGame}
                                   setScore={props.setScore}
+                                  setState={props.setState}
                 />
             </Row>
             <Row className="d-flex justify-content-center text-center mb-5 mt-5">

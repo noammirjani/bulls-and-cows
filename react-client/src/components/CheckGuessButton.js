@@ -15,7 +15,7 @@ import { Col } from "react-bootstrap";
  *
  * @returns a JSX element containing a button for checking the user's guess.
  */
-function CheckGuessButton({actualNumbers, currGuesses, setMsg, cowsAndBulls, setCowsAndBulls, setInWin, setInGame, setScore}) {
+function CheckGuessButton(props) {
 
     const MAX_BULLS = 4;
     const MAX_COWS = 0;
@@ -32,17 +32,17 @@ function CheckGuessButton({actualNumbers, currGuesses, setMsg, cowsAndBulls, set
      */
     function validations() {
 
-        if (!currGuesses.every((val) => /^\d$/.test(val))) {
-            setMsg(notValidDigit);
+        if (!props.currGuesses.every((val) => /^\d$/.test(val))) {
+            props.setMsg(notValidDigit);
             return false;
         }
 
-        if (currGuesses.length !== new Set(currGuesses).size) {
-            setMsg(notValidUnique);
+        if (props.currGuesses.length !== new Set(props.currGuesses).size) {
+            props.setMsg(notValidUnique);
             return false;
         }
 
-        setMsg(validMsg);
+        props.setMsg(validMsg);
         return true;
     }
 
@@ -55,9 +55,10 @@ function CheckGuessButton({actualNumbers, currGuesses, setMsg, cowsAndBulls, set
         let bulls, cows;
         bulls = cows = 0;
 
-        for (let i = 0; i < currGuesses.length; i++) {
-            if (actualNumbers[i] === currGuesses[i]) bulls++;
-            else if (actualNumbers[i] !== currGuesses[i] && actualNumbers.includes(currGuesses[i])) cows++;
+        for (let i = 0; i < props.currGuesses.length; i++) {
+            if (props.actualNumbers[i] === props.currGuesses[i]) bulls++;
+            else if (props.actualNumbers[i] !== props.currGuesses[i] &&
+                     props.actualNumbers.includes(props.currGuesses[i])) cows++;
         }
         return {bulls, cows};
     }
@@ -72,9 +73,8 @@ function CheckGuessButton({actualNumbers, currGuesses, setMsg, cowsAndBulls, set
      */
     function checkWin(bulls, cows) {
         if (bulls === MAX_BULLS && cows === MAX_COWS) {
-            setScore(cowsAndBulls.length + 1);
-            setInWin(true);
-            setInGame(false);
+            props.setScore(props.cowsAndBulls.length + 1);
+            props.setState("win");
         }
     }
 
@@ -88,9 +88,9 @@ function CheckGuessButton({actualNumbers, currGuesses, setMsg, cowsAndBulls, set
     function checkGuess() {
         if (validations()) {
             const {bulls, cows} = calculateGuess();
-            setMsg(`Your Guess: ${bulls} bulls and ${cows} cows.`);
-            let currGuessData = {guess: currGuesses.join(" "), bulls: bulls, cows: cows};
-            setCowsAndBulls(current => [currGuessData, ...current]);
+            props.setMsg(`Your Guess: ${bulls} bulls and ${cows} cows.`);
+            let currGuessData = {guess: props.currGuesses.join(" "), bulls: bulls, cows: cows};
+            props.setCowsAndBulls(current => [currGuessData, ...current]);
             checkWin(bulls, cows);
         }
     }
