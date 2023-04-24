@@ -151,8 +151,7 @@ function Main() {
                                                      setCowsAndBulls={setCowsAndBulls}
                                                      setState={setGameState}
                         />}
-                        {gameState === WIN && <Win userScore={userScore} handlePostWinner={handlePostWinner}
-                        />}
+                        {gameState === WIN && <Win userScore={userScore} handlePostWinner={handlePostWinner}/>}
                         {gameState === HIGHSCORES && <HighScore currHighscores={currHighscores}/>}
                     </Container>
                 </div>
