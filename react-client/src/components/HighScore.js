@@ -10,7 +10,7 @@ import Table from "./Tables";
 function HighScore({currHighscores}) {
 
     const usersWithIndex = currHighscores.map((score, index) => {
-        return {...score, place: index};
+        return {...score, place: index+1};
     });
 
     return (
