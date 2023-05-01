@@ -1,6 +1,7 @@
 package hac.javareact;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.*;
@@ -18,6 +19,25 @@ public class ApiServlet extends HttpServlet {
 
     //private String realPath;
     private static final String SCORES = "scores.dat";
+    private static File file;
+
+
+    /**
+     * opens a file with the current path and create it
+     * @return file
+     */
+    private File createFile() throws Exception {
+
+        String path = getServletContext().getRealPath(".") + File.separator + SCORES;
+        File file = new File(path);
+
+        if(!file.exists()){
+            boolean created = file.createNewFile();
+            if(!created) throw new Exception("could not create file");
+        }
+
+        return file;
+    }
 
 
     /**
@@ -27,8 +47,8 @@ public class ApiServlet extends HttpServlet {
      * @throws IOException            if there was an error reading from the file.
      * @throws ClassNotFoundException if the class of the serialized object cannot be found.
      */
-    public synchronized static List<User> readUsersFromFile() throws IOException, ClassNotFoundException {
-        try (ObjectInputStream objIn = new ObjectInputStream(new FileInputStream(SCORES))) {
+    public synchronized List<User> readUsersFromFile() throws IOException, ClassNotFoundException {
+        try (ObjectInputStream objIn = new ObjectInputStream(Files.newInputStream(file.toPath()))){
             return (List<User>) objIn.readObject();
         }
     }
@@ -63,7 +83,6 @@ public class ApiServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         try {
             User newUser = getNewUser(request);
 
@@ -77,7 +96,7 @@ public class ApiServlet extends HttpServlet {
             updateUsersData(newUser, users);
 
             synchronized (this) {
-                try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(SCORES))) {
+                try (ObjectOutputStream objOut = new ObjectOutputStream(Files.newOutputStream(file.toPath()))) {
                     objOut.writeObject(users);
                 }
             }
@@ -116,10 +135,15 @@ public class ApiServlet extends HttpServlet {
      * @return a User object containing the new user's data.
      */
     private User getNewUser(HttpServletRequest request) {
-
         //get the data from body of the request
         String username = request.getParameter("username");
-        int score = Integer.parseInt(request.getParameter("score"));
+        String scoreParam = request.getParameter("score");
+
+        if (username == null || scoreParam == null) {
+            throw new IllegalArgumentException("Missing username or score parameter");
+        }
+
+        int score = Integer.parseInt(scoreParam);
 
         //validation in setting
         User newUser = new User();
@@ -151,13 +175,14 @@ public class ApiServlet extends HttpServlet {
      */
     @Override
     public void init() {
-        //this.realPath = getServletContext().getRealPath(".");
+        try{file = createFile();}
+        catch(Exception e){System.out.println(e.getMessage());}
     }
 
     /**
      * Cleans up resources used by the servlet.
      */
     @Override
-    public void destroy() {
-    }
+    public void destroy() {}
+
 }

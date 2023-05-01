@@ -85,7 +85,7 @@ function Main() {
      * @param {object} error - The error object.
      */
     function handleError(error) {
-        setError("Some error occurred:" + error.toString());
+        setError("looks like we cannot save your score " + error.toString());
     }
 
     /**

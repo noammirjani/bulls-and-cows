@@ -37,10 +37,10 @@ function CheckGuessButton(props) {
             return false;
         }
 
-        if (props.currGuesses.length !== new Set(props.currGuesses).size) {
-            props.setMsg(notValidUnique);
-            return false;
-        }
+        // if (props.currGuesses.length !== new Set(props.currGuesses).size) {
+        //     props.setMsg(notValidUnique);
+        //     return false;
+        // }
 
         props.setMsg(validMsg);
         return true;
@@ -52,13 +52,30 @@ function CheckGuessButton(props) {
      * @returns an object containing the number of bulls and cows in the current guess.
      */
     function calculateGuess() {
-        let bulls, cows;
-        bulls = cows = 0;
+        let bulls = 0;
+        let cows = 0;
+        const usedActualIndices = [];
+        const usedGuessIndices = [];
 
         for (let i = 0; i < props.currGuesses.length; i++) {
-            if (props.actualNumbers[i] === props.currGuesses[i]) bulls++;
-            else if (props.actualNumbers[i] !== props.currGuesses[i] &&
-                     props.actualNumbers.includes(props.currGuesses[i])) cows++;
+            if (props.actualNumbers[i] === props.currGuesses[i]) {
+                bulls++;
+                usedActualIndices.push(i);
+                usedGuessIndices.push(i);
+            }
+        }
+
+        for (let i = 0; i < props.currGuesses.length; i++) {
+            if (!usedGuessIndices.includes(i)) {
+                for (let j = 0; j < props.actualNumbers.length; j++) {
+                    if (props.actualNumbers[j] === props.currGuesses[i] && !usedActualIndices.includes(j)) {
+                        cows++;
+                        usedActualIndices.push(j);
+                        usedGuessIndices.push(i);
+                        break;
+                    }
+                }
+            }
         }
         return {bulls, cows};
     }
