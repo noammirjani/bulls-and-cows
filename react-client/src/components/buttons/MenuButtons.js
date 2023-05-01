@@ -1,5 +1,5 @@
 import {Col, Row} from "react-bootstrap";
-import GameRules from "./GameRules";
+import GameRules from "../layout/GameRules";
 import {useState} from "react";
 
 /**

@@ -22,7 +22,6 @@ function CheckGuessButton(props) {
 
     const validMsg = "Your history of guesses will appear below:";
     const notValidDigit = "Please select 4 digits";
-    const notValidUnique = "Please select 4 unique digits";
 
     /**
      * validations function checks if the current guess is valid. If the guess is invalid, it sets the message to display an error
@@ -36,12 +35,6 @@ function CheckGuessButton(props) {
             props.setMsg(notValidDigit);
             return false;
         }
-
-        // if (props.currGuesses.length !== new Set(props.currGuesses).size) {
-        //     props.setMsg(notValidUnique);
-        //     return false;
-        // }
-
         props.setMsg(validMsg);
         return true;
     }
@@ -57,6 +50,7 @@ function CheckGuessButton(props) {
         const usedActualIndices = [];
         const usedGuessIndices = [];
 
+        // Check for bulls.
         for (let i = 0; i < props.currGuesses.length; i++) {
             if (props.actualNumbers[i] === props.currGuesses[i]) {
                 bulls++;
@@ -65,6 +59,7 @@ function CheckGuessButton(props) {
             }
         }
 
+        // Check for cows.
         for (let i = 0; i < props.currGuesses.length; i++) {
             if (!usedGuessIndices.includes(i)) {
                 for (let j = 0; j < props.actualNumbers.length; j++) {

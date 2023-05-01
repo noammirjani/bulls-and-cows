@@ -1,8 +1,8 @@
 import {Row} from "react-bootstrap";
-import UserMessages from "./UserMessages";
+import UserMessages from "../layout/UserMessages";
 
 /**
- * Win component is displayed when the user wins the game. It receives the user's score and a function to handle the
+ * WinScreen component is displayed when the user wins the game. It receives the user's score and a function to handle the
  * submission of the user's name for the high score table.
  *
  * @param {number} userScore - The user's score.
@@ -10,7 +10,7 @@ import UserMessages from "./UserMessages";
  * @returns a JSX element containing a message congratulating the user on winning the game and a form to submit the
  * user's name for the high score table.
  */
-function Win({userScore, handlePostWinner}) {
+function WinScreen({userScore, handlePostWinner}) {
 
     /**
      * Handles the submission of the user's name for the high score table.
@@ -59,4 +59,4 @@ function Win({userScore, handlePostWinner}) {
 }
 
 
-export default Win;
+export default WinScreen;

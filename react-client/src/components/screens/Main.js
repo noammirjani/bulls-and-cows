@@ -1,11 +1,11 @@
 import {Container} from "react-bootstrap";
 import {useState} from "react";
-import CardImage from "./CardImage";
-import MenuButtons from "./MenuButtons";
-import UserMessages from "./UserMessages";
-import Game from "./Game";
-import Win from "./Win";
-import HighScore from "./HighScore";
+import CardImage from "../layout/CardImage";
+import MenuButtons from "../buttons/MenuButtons";
+import UserMessages from "../layout/UserMessages";
+import GameScreen from "./GameScreen";
+import WinScreen from "./WinScreen";
+import HighScoreScreen from "./HighScoreScreen";
 
 /*
  * Main component is the root component of the game. It contains the game logic and renders other components.
@@ -140,18 +140,18 @@ function Main() {
                     <Container>
                         <MenuButtons initFunc={init}/>
                         {error && <UserMessages userMessage={error} variant={"danger"}/>}
-                        {gameState === GAME && <Game setScore={setUserScore}
-                                                     actualNumbers={actualNumbers}
-                                                     guessNumbers={guessNumbers}
-                                                     userMessage={gameMessage}
-                                                     cowsAndBulls={cowsAndBulls}
-                                                     setGuessNumbers={setGuessNumbers}
-                                                     setUserMessage={setGameMessage}
-                                                     setCowsAndBulls={setCowsAndBulls}
-                                                     setGameState={setGameState}
+                        {gameState === GAME && <GameScreen setScore={setUserScore}
+                                                           actualNumbers={actualNumbers}
+                                                           guessNumbers={guessNumbers}
+                                                           userMessage={gameMessage}
+                                                           cowsAndBulls={cowsAndBulls}
+                                                           setGuessNumbers={setGuessNumbers}
+                                                           setUserMessage={setGameMessage}
+                                                           setCowsAndBulls={setCowsAndBulls}
+                                                           setGameState={setGameState}
                         />}
-                        {gameState === WIN && <Win userScore={userScore} handlePostWinner={handlePostWinner}/>}
-                        {gameState === HIGHSCORES && <HighScore currHighscores={currHighscores}/>}
+                        {gameState === WIN && <WinScreen userScore={userScore} handlePostWinner={handlePostWinner}/>}
+                        {gameState === HIGHSCORES && <HighScoreScreen currHighscores={currHighscores}/>}
                     </Container>
                 </div>
             </div>

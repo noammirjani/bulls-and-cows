@@ -1,12 +1,12 @@
-import NumberSelector from "./NumberSelector";
+import NumberSelector from "../layout/NumberSelector";
 import {Row} from "react-bootstrap";
-import CheckGuessButton from "./CheckGuessButton";
-import UserMessages from "./UserMessages";
-import Tables from "./Tables";
+import CheckGuessButton from "../buttons/CheckGuessButton";
+import UserMessages from "../layout/UserMessages";
+import Tables from "../layout/Tables";
 
 
 /**
- * Game component is the main component for the Bulls and Cows game. It displays the number selector, check guess button,
+ * GameScreen component is the main component for the Bulls and Cows game. It displays the number selector, check guess button,
  * user messages, and guessing table. The component receives various props that it uses to manage the game state and
  * update the UI.
  *
@@ -24,7 +24,7 @@ import Tables from "./Tables";
  * @param {function} props.setScore - The function used to set the player's score.
  * @returns a JSX element containing the various game components.
  */
-function Game(props) {
+function GameScreen(props) {
 
     return (
         <>
@@ -55,4 +55,4 @@ function Game(props) {
     );
 }
 
-export default Game;
+export default GameScreen;
