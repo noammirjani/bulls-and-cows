@@ -1,70 +1,94 @@
-
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/YDg-_nm7)
-
-
 # 🐂 🐂 BULLS AND COWS 🐄🐄
 
-## Authors
-* Name: Ariel Amon   Email: arielam@edu.hac.ac.il
-* Name: Noam Mirjani  Email: noammir@edu.hac.ac.il
-
 ![App Screenshot](react-client/public/assets/CowAndBull.jpg)
-#### Clone the repository using the command below
 
-```bash
+## Table of Contents
 
-git clone https://github.com/Solange-s-Courses/ex3-react-java-ex3_ariel_amon_noam_mirjani.git
+- [Authors](#authors)
+- [About](#about)
+- [Usage](#usage)
+  - [Setup Instructions](#setup-instructions)
+    - [Using IntelliJ IDEA](#using-intellij-idea)
+    - [Using Visual Studio Code](#using-visual-studio-code)
+- [Accessing the Application](#accessing-the-application)
+- [Dependencies](#dependencies)
+- [License](#license)
 
-```
+## Authors
+
+- Noam Mirjani
+- Ariel Amon
+
+## About
+
+The Bulls and Cows web-based game, inspired by Mastermind, challenges players to guess a four-digit number within seven tries. Players receive feedback in terms of "Bulls" (correct digits in the right position) and "Cows" (correct digits in the wrong position) for each guess.
+
+## Usage
+
+### Setup Instructions
+
+To get started:
+
+#### Using IntelliJ IDEA:
+
+- Server Configuration:
+  1. Go to `Run -> Edit Configurations`.
+  2. Add a `Tomcat Server -> Local` configuration.
+  3. Specify your local Tomcat installation path.
+  4. Deploy the `java-react.war` file (located in the project's target folder) by clicking the "Fix" button.
+
+- Initial Setup:
+  - If encountering issues, close the project, delete the `.idea` folder, and reopen to recreate the run configuration.
+
+- Dependencies:
+  Ensure correct project dependencies:
+  - Tomcat 9.0.45
+  - Node.js v18.15.0 (npm 9.5.0)
+  - Java SDK 19
+
+#### Using Visual Studio Code:
+
+- Deploying to Tomcat:
+  1. Start your local Tomcat server manually:
+     ```bash
+     cd /path/to/tomcat
+     chmod +x ./bin/startup.sh
+     ./bin/startup.sh
+     ```
+  2. Copy the generated WAR file into the Tomcat `webapps` directory.
+
+  3. To shut down the server after playing:
+     ```bash
+     cd /path/to/tomcat
+     chmod +x ./bin/shutdown.sh 
+     ./bin/shutdown.sh 
+     ```
+
+- Running the Client:
+  - Open the terminal:
+    ```bash
+    cd react-client
+    npm install
+    npm start
+    ```
+
+## Accessing the Application
+
+- React client: [http://localhost:3000](http://localhost:3000)
+- Server API: [http://localhost:8080/api/highscores](http://localhost:8080/api/highscores)
+
+## Dependencies
+
+- Tomcat 9.0.45
+- Node.js v18.15.0 (npm 9.5.0)
+- Java SDK 19
+- React (version X.X.X)
+
+Ensure that the server endpoint is customized without hardcoding the host and port in the React code (use 'api/' instead of 'http://localhost:8080/api/'). Additionally, ensure proper implementation of REST API functionalities for the server to operate correctly.
 
 
-<a href=”api/index.html”>API documentation</a>
-
-## Explanations
-This is a web-based implementation of the Bulls and Cows game, also known as Mastermind. In this game, the computer selects a four-digit number, and the player must guess the number within seven tries. Each guess is evaluated and the player is given feedback in terms of "Bulls" and "Cows" - "Bulls" represent correct digits in the right position, while "Cows" represent correct digits in the wrong position.
-
-## Acknowledgements
-This game was inspired by the Bulls and Cows game and the Mastermind game, but with a few modifications to the typical game mechanics. In this implementation, each number has 4 unique digits, but notice that duplicate digits are allowed in the player's guesses. This change is intended to help the player improve their score. Speaking of score, the player's score is equal to the number of guesses they make, with a lower score being better. The minimum possible score is 1.
-
-The high score screen displays the top 5 users with the best scores. We only store basic data for each user, including their name and their best score. If a user submits a new score that is better than their existing score, we update their score accordingly. Worst scores do not affect the user's stored data.
-## How to use this template
-This is the template for a project where front-end and back-end are separated.
-The front-end is a React application, the back-end is a Java Web application
-including a Servlet for REST API endpoints.
-
-### Create a run configuration for the Server
-* In IntelliJ, go to Run->Edit Configurations
-* Click on the + sign and select Tomcat Server -> Local
-* In the Tomcat Server Settings, select your local installation of tomcat (you can download it from https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.45/bin/apache-tomcat-9.0.45.tar.gz)
-* In the Deployment tab, select the java-react:war file to deploy (the war file in the target folder of your project), IntelliJ should automatically detect it and display a "Fix" button. Click on it.
-* uncheck the "After launch: Open in browser" checkbox (we don't want to open the browser when we run the server, it's a REST API server)
-* Click on the OK button
+## License
+[API documentation](api/index.html)
 
 
-### initializing IntelliJ
-In case you get into trouble with IntelliJ, you should close the project,
-delete the .idea folder, re-open the project and follow the instructions above to
-recreate a run configuration.
-
-###  dependencies
-The template depends on:
-* your local installation of tomcat, this template uses
-  tomcat 9.0.45 that can be downloaded from https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.45/bin/apache-tomcat-9.0.45.tar.gz.
-  In order to point to your own installation of tomcat, edit configuration in IntelliJ change the application server.
-* your local installation of nodejs, this template is based on nodejs v18.15.0 (npm 9.5.0). You can download it from https://nodejs.org/en/download.
-* your local installation of java (select one SDK at: File->Project Structure->Platform SDK). You can add SDK from IntelliJ by cliking on  File->Project Structure->Platform Settings-> +).
-  This template is based on version 19, you can also download it from https://jdk.java.net/19/).
-
-###  source files
-The template includes:
-* a Java Web template with an empty Servlet to implement your server side REST API under the src/main/java folder
-* a React template under the reac-client folder, with an initialized npm project.
-
-## In order to run your exercise you:
-* run the server side; with IntelliJ configuration at the upper right (created above)
-* run the client side: open the terminal: `cd react-client`, `npm install`,  run with the command `npm start`
-
-Then browse:
-* your react client at http://localhost:3000
-* your server will be available at http://localhost:8080/api/highscores (you have of course to implement the REST API).
-  Note that you should never specify the host and port in your React code! (use 'api/' instead of 'http://localhost:8080/api/')
+Feel free to enhance and customize the game to suit your preferences. Happy gaming! 🎮
